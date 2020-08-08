@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  Cloud_53_ver2
+//  Cloud 53
 //
-//  Created by Андрей on 09.08.2020.
+//  Created by Андрей on 29.06.2020.
 //  Copyright © 2020 oak. All rights reserved.
 //
 
@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, context)
+        let contentView = ContentView().environment(\.managedObjectContext, context).environmentObject(ModelController())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

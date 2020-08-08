@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>865277959507-gg5mheendird4tv340deaebe46qugah5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.865277959507-gg5mheendird4tv340deaebe46qugah5</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDbqQyzW6bmKu_cMoGwaX0yEeTShx1dLE8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>865277959507</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>-28.Oblako</string>
+	<key>PROJECT_ID</key>
+	<string>cloud-53-university</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cloud-53-university.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:865277959507:ios:7304f296afca3f8926d5a6</string>
+	<key>DATABASE_URL</key>
+	<string>https://cloud-53-university.firebaseio.com</string>
+</dict>
+</plist>
