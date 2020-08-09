@@ -45,7 +45,6 @@ enum AuthCases {
             return nil
         }
     }
-
 }
 
 private enum AuthType {

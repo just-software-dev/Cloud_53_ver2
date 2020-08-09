@@ -132,8 +132,6 @@ final class AppleLogin: NSObject, ASAuthorizationControllerDelegate {
             case .update:
                 print("Apple ID updating isn't available")
             }
-            // For the purpose of this demo app, store the `userIdentifier` in the keychain.
-            // For the purpose of this demo app, show the Apple ID credential information in the `ResultViewController`.
         }
     }
     
