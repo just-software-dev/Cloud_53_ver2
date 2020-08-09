@@ -14,6 +14,7 @@ private struct DiscountSheet: View {
     
     var body: some View {
         Text(text).font(.SFUIDisplay(16))
+            .minimumScaleFactor(0.5)
             .padding(EdgeInsets(top: Figma.y(35), leading: Figma.x(22), bottom: Figma.y(35), trailing: Figma.x(22)))
             .frame(width: Figma.x(246))
             .background(Color.black)
