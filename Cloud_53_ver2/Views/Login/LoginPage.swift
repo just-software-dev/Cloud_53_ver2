@@ -22,19 +22,28 @@ struct LoginPage: View {
             NavigationLink(destination: PhoneAuthView(isActive: self.$isPhoneAuth).hideNavigationBar(), isActive: self.$isPhoneAuth) {
                 FigmaButtonView(text: "Войти по номеру телефона", loading: false, type: .primary)
             }.padding(.bottom, 20)
-            Button(action: {
-                self.changeMessage(nil)
-                self.mc.appleAuth() { result in
-                    switch result {
-                    case .success(let result):
-                        self.mc.setName(result ?? "")
-                    case .failure(let error):
-                        print("Apple login error: \(error.localizedDescription)")
-                        self.changeMessage(error.myDescription)
-                    }
+//            Button(action: {
+//                self.changeMessage(nil)
+//                self.mc.appleAuth() { result in
+//                    switch result {
+//                    case .success(let result):
+//                        self.mc.setName(result ?? "")
+//                    case .failure(let error):
+//                        print("Apple login error: \(error.localizedDescription)")
+//                        self.changeMessage(error.myDescription)
+//                    }
+//                }
+//            }) {
+//                FigmaButtonView(text: "Продолжить с Apple ID", loading: false, type: .secondary)
+//            }
+            AppleButton(action: {self.changeMessage(nil)}) { result in
+                switch result {
+                case .success(let result):
+                    self.mc.setName(result ?? "")
+                case .failure(let error):
+                    print("Apple login error: \(error.localizedDescription)")
+                    self.changeMessage(error.myDescription)
                 }
-            }) {
-                FigmaButtonView(text: "Продолжить с Apple ID", loading: false, type: .secondary)
             }
             Message(text: self.message, defaultHeight: 20)
                 .padding(.bottom)

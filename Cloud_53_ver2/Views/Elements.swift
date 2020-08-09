@@ -48,7 +48,7 @@ struct FigmaButtonView: View {
                         .scaledToFit()
                 } else if text != nil {
                     Text(text!)
-                        .font(.SFUIDisplay(16))
+                        .font(.SFUIDisplay(17.5))
                         .foregroundColor(.white)
                 }
             }

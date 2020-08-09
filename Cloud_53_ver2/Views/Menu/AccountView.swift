@@ -67,20 +67,15 @@ struct AccountView: View {
                     .padding(.top, 24)
             }
             Message(text: self.message, defaultHeight: 24)
-            Button(action: {
-                UIApplication.shared.closeKeyboard()
-                self.changeData()
-            }) {
-                FigmaButtonView(text: "Изменить данные", loading: self.isLoading, type: .primary)
-            }
-            HStack(spacing: Figma.x(18)) {
+            VStack(spacing: 17) {
+                Button(action: {
+                    UIApplication.shared.closeKeyboard()
+                    self.changeData()
+                }) {
+                    FigmaButtonView(text: "Изменить данные", loading: self.isLoading, type: .primary)
+                }
                 if authStatus == .phone {
-                    Button(action: {
-                        UIApplication.shared.closeKeyboard()
-                        self.setApple()
-                    }) {
-                        FigmaButtonView(text: "Apple ID", loading: false, type: .secondary)
-                    }
+                    AppleButton(mode: .link, action: {self.changeMessage(nil, add: false)}, completion: self.setApple)
                 }
                 Button(action: {
                     UIApplication.shared.closeKeyboard()
@@ -89,7 +84,7 @@ struct AccountView: View {
                 }) {
                     FigmaButtonView(text: "Выйти", loading: false, type: .secondary)
                 }
-            }.padding(.top, 17)
+            }
         }.padding(.horizontal, 40)
         .alert(isPresented: $showingAlert) {
             self.chooseAlert()
@@ -169,23 +164,20 @@ struct AccountView: View {
         }
     }
     
-    private func setApple() {
-        self.changeMessage(nil, add: false)
-        mc.appleAuth(mode: .link) { result in
-            switch result {
-            case .success(let result):
-                self.changeMessage("Ваш аккаунт Apple успешно привязан")
-                withAnimation {
-                    self.authStatus = .both
-                }
-                if let name = result {
-                    self.alertCase = .appleName
-                    self.appleName = name
-                    self.showingAlert = true
-                }
-            case .failure(let error):
-                self.changeMessage(error.myDescription)
+    private func setApple(_ result: Result<String?, Error>) {
+        switch result {
+        case .success(let result):
+            self.changeMessage("Ваш аккаунт Apple успешно привязан")
+            withAnimation {
+                self.authStatus = .both
             }
+            if let name = result {
+                self.alertCase = .appleName
+                self.appleName = name
+                self.showingAlert = true
+            }
+        case .failure(let error):
+            self.changeMessage(error.myDescription)
         }
     }
     
