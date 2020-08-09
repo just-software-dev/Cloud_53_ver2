@@ -613,7 +613,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Cloud_53_ver2/Облако 53.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cloud_53_ver2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
@@ -622,7 +622,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "-28.Oblako";
 				PRODUCT_NAME = "Облако 53";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -639,7 +639,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Cloud_53_ver2/Облако 53.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cloud_53_ver2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
@@ -648,7 +648,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "-28.Oblako";
 				PRODUCT_NAME = "Облако 53";
 				SWIFT_VERSION = 5.0;
