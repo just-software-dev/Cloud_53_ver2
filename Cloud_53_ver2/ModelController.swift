@@ -136,6 +136,17 @@ class ModelController: ObservableObject {
         DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/name", value: name, completion: completion)
     }
     
+    func setNameIfNotExists(_ name: String) {
+        guard let user = Auth.auth().currentUser else {return}
+        DataMonitoring.shareInstance.get(path: "users/\(user.uid)/open/name") { (snapshot) in
+            DispatchQueue.main.async {
+                if (snapshot.value as? String ?? "").isEmpty {
+                    self.setName(name)
+                }
+            }
+        }
+    }
+    
     func setCarNumber(_ car: String, completion: ((Error?, DatabaseReference) -> Void)? = nil) {
         guard let user = Auth.auth().currentUser else {return}
         UserDefaults.standard.set(car, forKey: "car")

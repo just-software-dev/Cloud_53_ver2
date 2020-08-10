@@ -25,7 +25,8 @@ struct LoginPage: View {
             AppleButton(action: {self.changeMessage(nil)}) { result in
                 switch result {
                 case .success(let result):
-                    self.mc.setName(result ?? "")
+                    guard let name = result else {return}
+                    self.mc.setNameIfNotExists(name)
                 case .failure(let error):
                     print("Apple login error: \(error.localizedDescription)")
                     self.changeMessage(error.myDescription)

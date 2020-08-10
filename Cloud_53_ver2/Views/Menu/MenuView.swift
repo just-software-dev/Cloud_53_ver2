@@ -270,7 +270,7 @@ struct MenuView: View {
     private let buttonHeight: CGFloat = 48
     private var maxY: CGFloat
     
-    @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu>
+    private var menu: FetchedResults<Menu>
     
     var body: some View {
         VStack(spacing: 24) {
@@ -298,7 +298,7 @@ struct MenuView: View {
                         self.isAlert = true
                         return
                     }
-                    withAnimation(Animation.easeInOut(duration: 0.5)) {
+                    withAnimation {
                         self.customSheet = (view: AnyView(ImageZoomView(image: uiImage)), alignment: .bottom)
                     }
                 }) {
@@ -317,7 +317,8 @@ struct MenuView: View {
             DispatchQueue.main.async {
                 self.yRange = Array(stride(from: self.buttonHeight, to: self.maxY, by: (self.maxY - self.buttonHeight) / CGFloat(self.menu.count)))
             }
-        }.alert(isPresented: self.$isAlert) {
+        }
+        .alert(isPresented: self.$isAlert) {
             Alert(title: Text("Ошибка"))
         }
     }
@@ -330,9 +331,10 @@ struct MenuView: View {
         }
     }
     
-    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>) {
+    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>, menu: FetchedResults<Menu>) {
         maxY = UIImage(named: "cold_texture")!.size.height - self.buttonHeight
         self._customSheet = customSheet
+        self.menu = menu
     }
 }
 

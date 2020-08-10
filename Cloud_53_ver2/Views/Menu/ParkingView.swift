@@ -29,7 +29,7 @@ struct ParkingView: View {
         VStack(spacing: 0) {
             FigmaTextField.name(input: self.$name)
                 .padding(.bottom, 15)
-            FigmaTextField(text: "Номер машины", input: self.$carNumber, maxLength: 6)
+            FigmaTextField(text: "Номер машины", input: self.$carNumber, maxLength: 9)
                 .padding(.bottom, 15)
             FigmaTextField.phone(input: self.$phone)
                 .padding(.bottom, 33)
