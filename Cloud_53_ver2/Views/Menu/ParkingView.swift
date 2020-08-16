@@ -19,23 +19,23 @@ struct ParkingView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @State private var name = ""
-    @State private var carNumber = ""
-    @State private var phone = Auth.auth().currentUser?.phoneNumber ?? ""
+    @ObservedObject private var name = InputText("")
+    @ObservedObject private var carNumber = InputText("")
+    @ObservedObject private var phone = InputText(Auth.auth().currentUser?.phoneNumber ?? "")
     @State private var message: String?
     @State private var isLoading = false
     
     var body: some View {
         VStack(spacing: 0) {
-            FigmaTextField.name(input: self.$name)
+            FigmaTextField.name(input: self.name)
                 .padding(.bottom, 15)
-            FigmaTextField(text: "Номер машины", input: self.$carNumber, maxLength: 9)
+            FigmaTextField(text: "Номер машины", input: self.carNumber, maxLength: 9)
                 .padding(.bottom, 15)
-            FigmaTextField.phone(input: self.$phone)
+            FigmaTextField.phone(input: self.phone)
                 .padding(.bottom, 33)
             Button(action: {
                 UIApplication.shared.closeKeyboard()
-                self.mc.setCarNumber(self.carNumber)
+                self.mc.setCarNumber(self.carNumber.text)
                 self.request()
             }) {
                 FigmaButtonView(text: "Заказать парковку", loading: self.isLoading, type: .primary)
@@ -46,15 +46,15 @@ struct ParkingView: View {
         .padding(.horizontal)
         .onAppear() {
             guard let user = self.mc.user else {return}
-            self.name = user.name
-            self.carNumber = user.car
+            self.name.text = user.name
+            self.carNumber.text = user.car
         }
     }
     
     private func request() {
         self.changeMessage(nil)
         self.isLoading = true
-        let data = ParkingData(name: self.name, car: self.carNumber, phone: self.phone)
+        let data = ParkingData(name: self.name.text, car: self.carNumber.text, phone: self.phone.text)
         DataMonitoring.shareInstance.get(path: "information/parking") { (snapshot) in
             DispatchQueue.main.async {
                 guard let dict = snapshot.value as? [String: String],

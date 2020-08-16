@@ -8,25 +8,21 @@
 
 import SwiftUI
 
-private struct SlidingData {
-    var title: String
-    var input: String
-    var isPhone: Bool
-}
-
-private struct PhoneAuthSubview: SlidingView {
+private struct PhoneAuthSubview: View {
     
-    var data: Binding<SlidingData>
+    var title: String
+    var isPhone: Bool
+    unowned var it: InputText
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            FigmaTitle(text: data.wrappedValue.title)
+            FigmaTitle(text: title)
                 .padding(.top, Figma.y(86))
             Group {
-                if data.wrappedValue.isPhone {
-                    FigmaTextField.phone(input: data.input)
+                if isPhone {
+                    FigmaTextField.phone(input: it)
                 } else {
-                    FigmaTextField.code(input: data.input)
+                    FigmaTextField.code(input: it)
                 }
             }.padding(.top, Figma.y(208))
         }.padding(.horizontal, Figma.x(40))
@@ -38,30 +34,31 @@ struct PhoneAuthView: View {
     @ObservedObject var keyboardResponder = KeyboardResponder()
     @Binding var isActive: Bool
     @EnvironmentObject var mc: ModelController
-    @ObservedObject private var slideController = SlideController<PhoneAuthSubview>()
-    @State private var data: [SlidingData] = [
-        SlidingData(title: "Укажите свой номер телефона", input: "", isPhone: true),
-        SlidingData(title: "Введите код из смс", input: "", isPhone: false)
-    ]
+    @ObservedObject private var slideController = SlideController()
+    private let titles = ["Укажите свой номер телефона", "Введите код из смс"]
+    private let types = [true, false]
+    @ObservedObject private var phone = InputText("")
+    @ObservedObject private var code = InputText("")
     
     @State private var isLoading: Bool = false
     @State private var message: String? = nil
 
     var body: some View {
         VStack(spacing: 0) {
-            SlideView(slideController: self.slideController, whenReturned: {self.isActive = false}, whenFinished: {})
+            SlideView(slideController: slideController, setView: { [view = self, unowned phone = self.phone, unowned code = self.code] step in
+                return AnyView(PhoneAuthSubview(title: view.titles[step], isPhone: view.types[step], it: step == 0 ? phone : code))
+            })
             VStack(spacing: 0) {
                 Message(text: message, defaultHeight: 51)
-                Button(action: {
+                Button(action: { [view = self] in
                     UIApplication.shared.closeKeyboard()
-                    self.action()
+                    view.next()
                 }) {
                     FigmaButtonView(text: "Далее", loading: self.isLoading, type: .primary)
                 }
                 Button(action: {
                     UIApplication.shared.closeKeyboard()
-                    self.changeMessage(nil)
-                    self.slideController.back()
+                    self.back()
                 }) {
                     FigmaButtonView(text: "Назад", loading: false, type: .secondary)
                 }.padding(.top, 17)
@@ -69,13 +66,11 @@ struct PhoneAuthView: View {
                     .padding(.top, 10)
                 Spacer()
             }.padding(.horizontal, Figma.x(40))
-        }.onAppear() {
-            self.setContent()
         }.contentShape(Rectangle())
         .onTapGesture {
             UIApplication.shared.closeKeyboard()
         }
-        .modifier(LiftContent(up: keyboardResponder.up))
+//        .modifier(LiftContent(up: keyboardResponder.up))
     }
     
     private func changeMessage(_ text: String?) {
@@ -84,38 +79,39 @@ struct PhoneAuthView: View {
         }
     }
     
-    private func setContent() {
-        var array: [Binding<SlidingData>] = []
-        for i in 0..<self.data.count {
-            array.append(self.$data[i])
+    private func back() {
+        self.changeMessage(nil)
+        if slideController.step == 0 {
+            isActive = false
+        } else {
+            self.slideController.back()
         }
-        self.slideController.content = array
     }
     
-    private func action() {
-        isLoading = true
-        changeMessage(nil)
-        if slideController.step == 0 {
-            mc.enterPhone(phone: data[0].input) { result in
-                self.isLoading = false
-                switch result {
-                case .success:
-                    self.slideController.next()
-                case .failure(let error):
-                    self.changeMessage(error.myDescription)
-                }
-            }
-        } else if slideController.step == 1 {
-            mc.enterCode(code: data[1].input) { result in
-                self.isLoading = false
-                switch result {
-                case .success:
-                    self.slideController.next()
-                case .failure(let error):
-                    self.changeMessage(error.myDescription)
-                }
-            }
-        }
+    private func next() {
+//        isLoading = true
+//        changeMessage(nil)
+//        if slideController.step == 0 {
+//            mc.enterPhone(phone: phone.text) { result in
+//                self.isLoading = false
+//                switch result {
+//                case .success:
+//                    self.slideController.next()
+//                case .failure(let error):
+//                    self.changeMessage(error.myDescription)
+//                }
+//            }
+//        } else if slideController.step == 1 {
+//            mc.enterCode(code: code.text) { result in
+//                self.isLoading = false
+//                switch result {
+//                case .success:
+//                    print("Success (phone auth)")
+//                case .failure(let error):
+//                    self.changeMessage(error.myDescription)
+//                }
+//            }
+//        }
     }
 }
 

@@ -32,7 +32,7 @@
 		55286BE024DF6A95000E606D /* DataMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC124DF6A93000E606D /* DataMonitoring.swift */; };
 		55286BE124DF6A95000E606D /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC224DF6A93000E606D /* RoundedCorners.swift */; };
 		55286BE224DF6A95000E606D /* MyHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC324DF6A93000E606D /* MyHTTP.swift */; };
-		55286BE324DF6A95000E606D /* Sliding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC424DF6A93000E606D /* Sliding.swift */; };
+		55286BE324DF6A95000E606D /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC424DF6A93000E606D /* SlideView.swift */; };
 		55286BE424DF6A95000E606D /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC524DF6A93000E606D /* Loading.swift */; };
 		55286BE524DF6A95000E606D /* QRcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC624DF6A93000E606D /* QRcode.swift */; };
 		55286BE624DF6A95000E606D /* Figma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC724DF6A93000E606D /* Figma.swift */; };
@@ -87,7 +87,7 @@
 		55286BC124DF6A93000E606D /* DataMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMonitoring.swift; sourceTree = "<group>"; };
 		55286BC224DF6A93000E606D /* RoundedCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		55286BC324DF6A93000E606D /* MyHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyHTTP.swift; sourceTree = "<group>"; };
-		55286BC424DF6A93000E606D /* Sliding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sliding.swift; sourceTree = "<group>"; };
+		55286BC424DF6A93000E606D /* SlideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
 		55286BC524DF6A93000E606D /* Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		55286BC624DF6A93000E606D /* QRcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRcode.swift; sourceTree = "<group>"; };
 		55286BC724DF6A93000E606D /* Figma.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Figma.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 				55286BC124DF6A93000E606D /* DataMonitoring.swift */,
 				55286BC224DF6A93000E606D /* RoundedCorners.swift */,
 				55286BC324DF6A93000E606D /* MyHTTP.swift */,
-				55286BC424DF6A93000E606D /* Sliding.swift */,
+				55286BC424DF6A93000E606D /* SlideView.swift */,
 				55286BC524DF6A93000E606D /* Loading.swift */,
 				55286BC624DF6A93000E606D /* QRcode.swift */,
 				55286BC724DF6A93000E606D /* Figma.swift */,
@@ -468,7 +468,7 @@
 				55286BE124DF6A95000E606D /* RoundedCorners.swift in Sources */,
 				55286BD324DF6A95000E606D /* AccountView.swift in Sources */,
 				55286BD824DF6A95000E606D /* PhoneAuthView.swift in Sources */,
-				55286BE324DF6A95000E606D /* Sliding.swift in Sources */,
+				55286BE324DF6A95000E606D /* SlideView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -82,7 +82,6 @@ struct DiscountsView: View {
     private let spaceWidth: CGFloat = Figma.x(20)
     
     @EnvironmentObject var mc: ModelController
-    @FetchRequest(fetchRequest: Promo.getAllItems()) var promo: FetchedResults<Promo>
     
     private var bigWidth: CGFloat {
         get {

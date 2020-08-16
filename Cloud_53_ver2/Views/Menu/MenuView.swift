@@ -270,7 +270,7 @@ struct MenuView: View {
     private let buttonHeight: CGFloat = 48
     private var maxY: CGFloat
     
-    private var menu: FetchedResults<Menu>
+//    private var menu: FetchedResults<Menu>
     
     var body: some View {
         VStack(spacing: 24) {
@@ -291,33 +291,33 @@ struct MenuView: View {
                     GrayButton(i: i, isError: self.$isAlert)
                 }
             }
-            ForEach(menu, id: \.self) { element in
-                Button(action: {
-                    guard let uiImage = UIImage(data: (element as! Menu).image)
-                    else {
-                        self.isAlert = true
-                        return
-                    }
-                    withAnimation {
-                        self.customSheet = (view: AnyView(ImageZoomView(image: uiImage)), alignment: .bottom)
-                    }
-                }) {
-                    ZStack(alignment: .leading) {
-                        TextureBackground(y: self.getY(id: Int((element as! Menu).id)))
-                            .frame(height: self.buttonHeight)
-                        Text((element as! Menu).title)
-                            .font(.SFUIDisplay(18))
-                            .padding(.horizontal, 31)
-                            .foregroundColor(.white)
-                    }
-                }
-            }
+//            ForEach(menu, id: \.self) { element in
+//                Button(action: {
+//                    guard let uiImage = UIImage(data: (element as! Menu).image)
+//                    else {
+//                        self.isAlert = true
+//                        return
+//                    }
+//                    withAnimation {
+//                        self.customSheet = (view: AnyView(ImageZoomView(image: uiImage)), alignment: .bottom)
+//                    }
+//                }) {
+//                    ZStack(alignment: .leading) {
+//                        TextureBackground(y: self.getY(id: Int((element as! Menu).id)))
+//                            .frame(height: self.buttonHeight)
+//                        Text((element as! Menu).title)
+//                            .font(.SFUIDisplay(18))
+//                            .padding(.horizontal, 31)
+//                            .foregroundColor(.white)
+//                    }
+//                }
+//            }
         }.padding(.horizontal)
-        .onReceive(menu.publisher) { _ in
-            DispatchQueue.main.async {
-                self.yRange = Array(stride(from: self.buttonHeight, to: self.maxY, by: (self.maxY - self.buttonHeight) / CGFloat(self.menu.count)))
-            }
-        }
+//        .onReceive(menu.publisher) { _ in
+//            DispatchQueue.main.async {
+//                self.yRange = Array(stride(from: self.buttonHeight, to: self.maxY, by: (self.maxY - self.buttonHeight) / CGFloat(self.menu.count)))
+//            }
+//        }
         .alert(isPresented: self.$isAlert) {
             Alert(title: Text("Ошибка"))
         }
@@ -331,10 +331,11 @@ struct MenuView: View {
         }
     }
     
-    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>, menu: FetchedResults<Menu>) {
+//    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>, menu: FetchedResults<Menu>) {
+    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>) {
         maxY = UIImage(named: "cold_texture")!.size.height - self.buttonHeight
         self._customSheet = customSheet
-        self.menu = menu
+//        self.menu = menu
     }
 }
 

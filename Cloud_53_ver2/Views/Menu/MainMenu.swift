@@ -87,7 +87,7 @@ struct MainMenu: View {
     private let titles = ["Здравствуйте!", "Акции", "Парковка", "Аккаунт"]
     private let images: [UIImage] = [UIImage(named: "menu_icon")!, UIImage(named: "percent")!, UIImage(named: "p")!, UIImage(named: "person")!]
     
-    @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu>
+//    @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu>
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -97,7 +97,8 @@ struct MainMenu: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
                     if selection == 0 {
-                        MenuView(self.$customSheet, menu: self.menu)
+//                        MenuView(self.$customSheet, menu: self.menu)
+                        MenuView(self.$customSheet)
                     } else if selection == 1 {
                         DiscountsView(sections: self.$sections, customSheet: self.$customSheet)
                     } else if selection == 2 {
