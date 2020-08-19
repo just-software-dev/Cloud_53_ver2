@@ -24,9 +24,9 @@ struct AccountView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @ObservedObject private var name = InputText("")
-    @ObservedObject private var phone = InputText(Auth.auth().currentUser?.phoneNumber ?? "")
-    @ObservedObject private var code = InputText("")
+    @State private var name = ""
+    @State private var phone = Auth.auth().currentUser?.phoneNumber ?? ""
+    @State private var code = ""
     @State private var isCode = false
     @State private var showingAlert = false
     @State private var alertCase: AlertCase = .exit
@@ -54,11 +54,16 @@ struct AccountView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            FigmaTextField.name(input: self.name)
+            FigmaTextField.name(input: self.$name)
                 .padding(.top, 13)
-            FigmaTextField.phone(input: self.phone).padding(.top, 24)
+            FigmaTextField.phone(input: self.$phone) {
+                if (self.phone != self.previousPhone) && self.isCode {
+                    self.changeIsCode(false)
+                    self.previousPhone = self.phone
+                }
+            }.padding(.top, 24)
             if isCode {
-                FigmaTextField.code(title: "Код из смс", input: self.code)
+                FigmaTextField.code(title: "Код из смс", input: self.$code)
                     .padding(.top, 24)
             }
             Message(text: self.message, defaultHeight: 24)
@@ -85,13 +90,7 @@ struct AccountView: View {
             self.chooseAlert()
         }
         .onAppear() {
-            self.name.text = self.mc.user?.name ?? ""
-        }
-        .onReceive(self.phone.text.publisher) { new in
-            if (self.phone.text != self.previousPhone) && self.isCode {
-                self.changeIsCode(false)
-                self.previousPhone = self.phone.text
-            }
+            self.name = self.mc.user?.name ?? ""
         }
     }
     
@@ -100,7 +99,7 @@ struct AccountView: View {
         case .appleName:
             return Alert(title: Text("Хотите заменить ваше имя на «\(self.appleName)»?"), primaryButton: .default(Text("Нет")) {self.appleName = ""}, secondaryButton: .destructive(Text("Да")) {
                     self.mc.setName(self.appleName)
-                    self.name.text = self.appleName
+                    self.name = self.appleName
                 })
         case .exit:
             return Alert(title: Text("Вы действительно хотите выйти из аккаунта?"), primaryButton: .default(Text("Да")) {self.mc.logOut()}, secondaryButton: .destructive(Text("Нет")))
@@ -112,11 +111,11 @@ struct AccountView: View {
         self.changeMessage(nil, add: false)
         var phoneChange = false
         var nameChange = false
-        if phone.text != Auth.auth().currentUser?.phoneNumber ?? "+" {
+        if phone != Auth.auth().currentUser?.phoneNumber ?? "+" {
             phoneChange = true
             if !isCode {
-                previousPhone = phone.text
-                mc.enterPhone(phone: self.phone.text) { result in
+                previousPhone = phone
+                mc.enterPhone(phone: self.phone) { result in
                     self.isLoading = false
                     switch result {
                     case .success:
@@ -127,7 +126,7 @@ struct AccountView: View {
                 }
             } else {
                 if authStatus == .both || authStatus == .phone {
-                    mc.enterCode(code: self.code.text, mode: .update) { result in
+                    mc.enterCode(code: self.code, mode: .update) { result in
                         self.isLoading = false
                         switch result {
                         case .success:
@@ -138,7 +137,7 @@ struct AccountView: View {
                         }
                     }
                 } else {
-                    mc.enterCode(code: self.code.text, mode: .link) { result in
+                    mc.enterCode(code: self.code, mode: .link) { result in
                         self.isLoading = false
                         switch result {
                         case .success:
@@ -151,9 +150,9 @@ struct AccountView: View {
                 }
             }
         }
-        if name.text != mc.user?.name ?? "" {
+        if name != mc.user?.name ?? "" {
             nameChange = true
-            mc.setName(name.text) { (error, ref) in
+            mc.setName(name) { (error, ref) in
                 DispatchQueue.main.async {
                     self.isLoading = false
                     self.changeMessage(error?.myDescription ?? "Имя успешно изменено.")

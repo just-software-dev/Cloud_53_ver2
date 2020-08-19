@@ -112,10 +112,11 @@ struct FigmaTitle: View {
 struct FigmaTextField: View {
     
     var text: String
-    unowned var input: InputText
+    @Binding var input: String
     var secure: Bool = false
     var keyboard: UIKeyboardType = .default
     var maxLength: Int
+    var onChanged: (() -> Void)?
     
     @State private var isSelect: Bool? = false
     
@@ -125,7 +126,7 @@ struct FigmaTextField: View {
                 .font(.SFProDisplay(14))
                 .foregroundColor(Figma.lightGray)
             ScrollView(.horizontal, showsIndicators: false) {
-                CustomTextField(text: self.input, isResponder: self.$isSelect, isSecured: self.secure, keyboard: self.keyboard, maxLength: self.maxLength)
+                CustomTextField(text: self.$input, isResponder: self.$isSelect, isSecured: self.secure, keyboard: self.keyboard, maxLength: self.maxLength, onChanged: self.onChanged)
             }
             Divider()
                 .background(Color.white)
@@ -136,15 +137,15 @@ struct FigmaTextField: View {
         })
     }
     
-    static func name(title: String = "Имя", input: InputText) -> FigmaTextField {
-        FigmaTextField(text: title, input: input, secure: false, maxLength: 30)
+    static func name(title: String = "Имя", input: Binding<String>, onChanged: (() -> Void)? = nil) -> FigmaTextField {
+        FigmaTextField(text: title, input: input, secure: false, maxLength: 30, onChanged: onChanged)
     }
     
-    static func phone(title: String = "Телефон", input: InputText) -> FigmaTextField {
-        FigmaTextField(text: title, input: input, keyboard: .phonePad, maxLength: 16)
+    static func phone(title: String = "Телефон", input: Binding<String>, onChanged: (() -> Void)? = nil) -> FigmaTextField {
+        FigmaTextField(text: title, input: input, keyboard: .phonePad, maxLength: 16, onChanged: onChanged)
     }
     
-    static func code(title: String = "Код", input: InputText) -> FigmaTextField {
-        FigmaTextField(text: title, input: input, keyboard: .numberPad, maxLength: 6)
+    static func code(title: String = "Код", input: Binding<String>, onChanged: (() -> Void)? = nil) -> FigmaTextField {
+        FigmaTextField(text: title, input: input, keyboard: .numberPad, maxLength: 6, onChanged: onChanged)
     }
 }

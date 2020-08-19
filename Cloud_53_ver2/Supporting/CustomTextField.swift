@@ -8,36 +8,28 @@
 
 import SwiftUI
 
-class InputText: ObservableObject {
-    
-    @Published var text: String
-    
-    init(_ text: String) {
-        self.text = text
-    }
-}
-
 struct CustomTextField: UIViewRepresentable {
     
     class Coordinator: NSObject, UITextFieldDelegate {
 
-        @Binding var change: Bool
-        unowned private var text: InputText
+        @Binding var text: String
+        
         private var keyboard: UIKeyboardType
         private var maxLength: Int?
+        private var onChanged: (() -> Void)?
 
-        init(text: InputText, keyboard: UIKeyboardType, maxLength: Int?, change: Binding<Bool>) {
+        init(text: Binding<String>, keyboard: UIKeyboardType, maxLength: Int?, onChanged: (() -> Void)?) {
             if keyboard == .phonePad {
                 DispatchQueue.main.async {
-                    if text.text.count == 0 {
-                        text.text = "+"
+                    if text.wrappedValue.count == 0 {
+                        text.wrappedValue = "+"
                     }
                 }
             }
-            self._change = change
-            self.text = text
+            _text = text
             self.keyboard = keyboard
             self.maxLength = maxLength
+            self.onChanged = onChanged
         }
         
         func phoneCheck(_ textField: UITextField) {
@@ -61,8 +53,8 @@ struct CustomTextField: UIViewRepresentable {
             DispatchQueue.main.async {
                 self.phoneCheck(textField)
                 self.lengthCheck(textField)
-                self.text.text = textField.text ?? ""
-                self.change.toggle()
+                self.text = textField.text ?? ""
+                (self.onChanged ?? {})()
             }
         }
         
@@ -73,16 +65,16 @@ struct CustomTextField: UIViewRepresentable {
     }
     
     func makeCoordinator() -> CustomTextField.Coordinator {
-        return Coordinator(text: text, keyboard: self.keyboard, maxLength: self.maxLength, change: self.$change)
+        return Coordinator(text: $text, keyboard: self.keyboard, maxLength: self.maxLength, onChanged: self.onChanged)
     }
     
-    unowned var text: InputText
+    @Binding var text: String
     @Binding var isResponder: Bool?
-    @State private var change = false
 
     var isSecured: Bool = false
     var keyboard: UIKeyboardType = .default
     var maxLength: Int?
+    var onChanged: (() -> Void)?
 
     func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> UITextField {
         let textField = UITextField(frame: .zero)
@@ -94,7 +86,7 @@ struct CustomTextField: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UITextField, context: UIViewRepresentableContext<CustomTextField>) {
-        uiView.text = text.text
+        uiView.text = text
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.setContentCompressionResistancePriority(.required, for: .vertical)
         if isResponder ?? false {
