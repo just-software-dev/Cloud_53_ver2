@@ -8,22 +8,16 @@
 
 import SwiftUI
 
-private struct SlidingData {
-    var title: String
-    var input: String
-    var isPhone: Bool
-}
-
 private struct PhoneAuthSubview: SlidingView {
     
-    var data: Binding<SlidingData>
+    var data: (title: String, input: Binding<String>, isPhone: Bool)
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            FigmaTitle(text: data.wrappedValue.title)
+            FigmaTitle(text: data.title)
                 .padding(.top, Figma.y(86))
             Group {
-                if data.wrappedValue.isPhone {
+                if data.isPhone {
                     FigmaTextField.phone(input: data.input)
                 } else {
                     FigmaTextField.code(input: data.input)
@@ -39,10 +33,7 @@ struct PhoneAuthView: View {
     @Binding var isActive: Bool
     @EnvironmentObject var mc: ModelController
     @ObservedObject private var slideController = SlideController<PhoneAuthSubview>()
-    @State private var data: [SlidingData] = [
-        SlidingData(title: "Укажите свой номер телефона", input: "", isPhone: true),
-        SlidingData(title: "Введите код из смс", input: "", isPhone: false)
-    ]
+    @State private var data = [(title: "Укажите свой номер телефона", input: "", isPhone: true), (title: "Введите код из смс", input: "", isPhone: false)]
     
     @State private var isLoading: Bool = false
     @State private var message: String? = nil
@@ -85,13 +76,12 @@ struct PhoneAuthView: View {
     }
     
     private func setContent() {
-        var array: [Binding<SlidingData>] = []
+        var array: [(title: String, input: Binding<String>, isPhone: Bool)] = []
         for i in 0..<self.data.count {
-            array.append(self.$data[i])
+            array.append((title: self.data[i].title, input: self.$data[i].input, isPhone: self.data[i].isPhone))
         }
         self.slideController.content = array
     }
-    
     private func action() {
         isLoading = true
         changeMessage(nil)
