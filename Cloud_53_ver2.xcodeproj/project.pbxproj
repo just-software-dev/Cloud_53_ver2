@@ -153,11 +153,11 @@
 				55286BEE24DF6ABB000E606D /* Облако 53.entitlements */,
 				55286BCF24DF6A95000E606D /* AppDelegate.swift */,
 				55286BCB24DF6A94000E606D /* ContentView.swift */,
-				55286BCC24DF6A94000E606D /* Fonts */,
 				55286BB924DF6A92000E606D /* ModelController.swift */,
 				55286BCA24DF6A93000E606D /* SceneDelegate.swift */,
-				55286BBA24DF6A93000E606D /* Supporting */,
 				55286BAD24DF6A92000E606D /* Views */,
+				55286BBA24DF6A93000E606D /* Supporting */,
+				55286BCC24DF6A94000E606D /* Fonts */,
 				55286BA824DF6960000E606D /* Assets.xcassets */,
 				55286BA624DF6942000E606D /* StartScreen.storyboard */,
 				55286BEF24DF6B06000E606D /* GoogleService-Info.plist */,
@@ -189,9 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				55286BAE24DF6A92000E606D /* Elements.swift */,
-				55286BAF24DF6A92000E606D /* Menu */,
 				55286BB524DF6A92000E606D /* IntroView.swift */,
 				55286BB624DF6A92000E606D /* Login */,
+				55286BAF24DF6A92000E606D /* Menu */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -618,6 +618,7 @@
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Cloud_53_ver2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -644,6 +645,7 @@
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Cloud_53_ver2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
