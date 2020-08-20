@@ -152,9 +152,9 @@
 			children = (
 				55286BEE24DF6ABB000E606D /* Облако 53.entitlements */,
 				55286BCF24DF6A95000E606D /* AppDelegate.swift */,
+				55286BCA24DF6A93000E606D /* SceneDelegate.swift */,
 				55286BCB24DF6A94000E606D /* ContentView.swift */,
 				55286BB924DF6A92000E606D /* ModelController.swift */,
-				55286BCA24DF6A93000E606D /* SceneDelegate.swift */,
 				55286BAD24DF6A92000E606D /* Views */,
 				55286BBA24DF6A93000E606D /* Supporting */,
 				55286BCC24DF6A94000E606D /* Fonts */,
