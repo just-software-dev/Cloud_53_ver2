@@ -8,6 +8,14 @@
 
 import SwiftUI
 
+private let discountWidth: CGFloat = Figma.x(158)
+private let spaceWidth: CGFloat = Figma.x(20)
+private var bigWidth: CGFloat {
+    get {
+        return discountWidth * 2 + spaceWidth
+    }
+}
+
 private struct DiscountSheet: View {
     
     var text: String
@@ -57,7 +65,7 @@ private struct DiscountColumn: View {
             ForEach(self.list) { discount in
                 DiscountCell(image: discount.image, title: discount.title, description: discount.description, customSheet: self.$customSheet)
             }
-        }
+        }.frame(width: discountWidth)
     }
 }
 
@@ -78,16 +86,7 @@ struct DiscountSection: Identifiable {
 
 struct DiscountsView: View {
     
-    private let discountWidth: CGFloat = Figma.x(158)
-    private let spaceWidth: CGFloat = Figma.x(20)
-    
     @EnvironmentObject var mc: ModelController
-    
-    private var bigWidth: CGFloat {
-        get {
-            return discountWidth * 2 + spaceWidth
-        }
-    }
     
     @Binding var sections: [DiscountSection]
     @Binding var customSheet: (view: AnyView, alignment: Alignment)?
@@ -96,18 +95,18 @@ struct DiscountsView: View {
     var body: some View {
         VStack(spacing: 10) {
             ForEach(self.sections) { section in
-                HStack(alignment: .top, spacing: self.spaceWidth) {
+                HStack(alignment: .top, spacing: spaceWidth) {
                     DiscountColumn(list: section.leftColumn, customSheet: self.$customSheet)
                     DiscountColumn(list: section.rightColumn, customSheet: self.$customSheet)
                 }
                 if section.bigDiscount != nil {
                     DiscountCell(image: section.bigDiscount!.image, title: section.bigDiscount!.title, description: section.bigDiscount!.description, customSheet: self.$customSheet)
+                        .frame(width: bigWidth)
                 } else {
-                    Spacer()
+                    Spacer().frame(width: 0, height: 0)
                 }
             }
-        }.frame(width: self.bigWidth)
-        .onAppear() {
+        }.onAppear() {
             DispatchQueue.global(qos: .userInteractive).async {
                 if self.sections.count == 0 {
                     self.update()
