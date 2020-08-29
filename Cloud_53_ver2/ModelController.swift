@@ -173,6 +173,8 @@ class ModelController: ObservableObject {
         UserDefaults.standard.set(nil, forKey: "instagram")
         UserDefaults.standard.set(nil, forKey: "apple_geo")
         UserDefaults.standard.set(nil, forKey: "phone")
+        UserDefaults.standard.set(nil, forKey: "andrey")
+        UserDefaults.standard.set(nil, forKey: "maks")
     }
     
     func logOut() {
@@ -241,6 +243,20 @@ extension ModelController {
                 }
                 if let phone = dict["phone"] as? String {
                     UserDefaults.standard.set(phone, forKey: "phone")
+                }
+            }
+        }
+        DataMonitoring.shareInstance.observe(path: "information/devs") { (snapshot) in
+            DispatchQueue.main.async {
+                guard let dict = snapshot.value as? [String: Any] else {
+                    print("Isn't dict")
+                    return
+                }
+                if let maks = dict["maks"] as? String {
+                    UserDefaults.standard.set(maks, forKey: "maks")
+                }
+                if let andrey = dict["andrey"] as? String {
+                    UserDefaults.standard.set(andrey, forKey: "andrey")
                 }
             }
         }

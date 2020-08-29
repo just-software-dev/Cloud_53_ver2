@@ -103,7 +103,7 @@ struct MainMenu: View {
                     } else if selection == 2 {
                         ParkingView()
                     } else if selection == 3 {
-                        AccountView()
+                        AccountView(customSheet: self.$customSheet)
                     }
                 }.modifier(Standart(title: titles[selection]))
             }.zIndex(2)
@@ -148,15 +148,15 @@ private extension View {
                                 .clipShape(RoundedCorners(tl: 25, tr: 25))
                         }.transition(.move(edge: .bottom))
                         .edgesIgnoringSafeArea(.all)
-                    } else if view.wrappedValue!.alignment == .center {
+                    } else if view.wrappedValue!.alignment == .center || view.wrappedValue!.alignment == .top {
                         view.wrappedValue!.view
                             .cornerRadius(30)
                             .padding(Figma.x(20))
                     }
-                }.zIndex(3)
+                }.zIndex(4)
                 TouchView(whenReturn: {view.wrappedValue = nil})
                     .edgesIgnoringSafeArea(.all)
-                    .zIndex(4)
+                    .zIndex(view.wrappedValue!.alignment == Alignment.top ? 3 : 5)
             }
         }
     }
