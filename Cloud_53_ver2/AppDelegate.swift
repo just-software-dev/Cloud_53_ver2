@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
         FirebaseApp.configure()
+        Messaging.messaging().subscribe(toTopic: "mailings") { error in
+            print("Subscribed to mailings topic")
+        }
         return true
     }
     
