@@ -13,6 +13,7 @@ private struct ParkingData: Encodable {
     var name: String
     var car: String
     var phone: String
+    var uid: String
 }
 
 struct ParkingView: View {
@@ -54,7 +55,7 @@ struct ParkingView: View {
     private func request() {
         self.changeMessage(nil)
         self.isLoading = true
-        let data = ParkingData(name: self.name, car: self.carNumber, phone: self.phone)
+        let data = ParkingData(name: self.name, car: self.carNumber, phone: self.phone, uid: Auth.auth().currentUser!.uid)
         DataMonitoring.shareInstance.get(path: "information/parking") { (snapshot) in
             DispatchQueue.main.async {
                 guard let dict = snapshot.value as? [String: String],
