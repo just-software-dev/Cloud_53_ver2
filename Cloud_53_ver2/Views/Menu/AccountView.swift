@@ -151,9 +151,7 @@ struct AccountView: View {
                 }
             }
             Button(action: {
-                withAnimation {
-                    self.isDevs.toggle()
-                }
+                self.isDevs.toggle()
             }) {
                 HStack {
                     UnderlinedButtonView(text: "Гении разработки")

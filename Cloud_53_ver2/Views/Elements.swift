@@ -32,10 +32,12 @@ struct FigmaButtonView: View {
     var image: UIImage?
     var loading: Bool
     var type: ButtonType
+    var bgColor: Color
+    var contentColor: Color
     
     var body: some View {
         ZStack {
-            self.chooseColor()
+            self.bgColor
             if self.loading {
                 Loading(color: .white)
                     .padding(7)
@@ -46,10 +48,11 @@ struct FigmaButtonView: View {
                         .resizable()
                         .padding(10)
                         .scaledToFit()
+                        .foregroundColor(contentColor)
                 } else if text != nil {
                     Text(text!)
                         .font(.SFUIDisplay(17.5))
-                        .foregroundColor(.white)
+                        .foregroundColor(contentColor)
                 }
             }
             Spacer()
@@ -57,12 +60,19 @@ struct FigmaButtonView: View {
         .cornerRadius(30)
     }
     
-    private func chooseColor() -> Color {
-        switch self.type {
+    init(text: String? = nil, image: UIImage? = nil, loading: Bool, type: ButtonType) {
+        self.text = text
+        self.image = image
+        self.loading = loading
+        self.type = type
+        
+        switch type {
         case .primary:
-            return Figma.red
+            self.bgColor = Figma.red
+            self.contentColor = .white
         case .secondary:
-            return Figma.gray
+            self.bgColor = Figma.gray
+            self.contentColor = .white
         }
     }
 }
