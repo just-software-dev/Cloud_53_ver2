@@ -34,12 +34,12 @@ private struct DiscountCell: View {
     var image: UIImage
     var title: String
     var description: String
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @Binding var customSheet: MyModal?
     
     var body: some View {
         Button(action: {
             withAnimation {
-                self.customSheet = (view: AnyView(DiscountSheet(text: self.description)), alignment: .center)
+                self.customSheet = MyModal(view: AnyView(DiscountSheet(text: self.description)), type: .center)
             }
         }) {
             VStack(alignment: .leading, spacing: 7) {
@@ -58,7 +58,7 @@ private struct DiscountCell: View {
 private struct DiscountColumn: View {
     
     var list: [Discount]
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @Binding var customSheet: MyModal?
     
     var body: some View {
         VStack(spacing: 10) {
@@ -89,7 +89,7 @@ struct DiscountsView: View {
     @EnvironmentObject var mc: ModelController
     
     @Binding var sections: [DiscountSection]
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @Binding var customSheet: MyModal?
     @State private var data: [Discount] = []
     
     var body: some View {

@@ -123,7 +123,7 @@ private struct QRwindow: View {
 private struct LoyaltyCard: View {
     
     @State private var spacing: CGFloat = 0
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @Binding var customSheet: MyModal?
     
     var body: some View {
         ZStack {
@@ -138,7 +138,7 @@ private struct LoyaltyCard: View {
                 ZStack {
                     Button(action: {
                         withAnimation {
-                            self.customSheet = (view: AnyView(QRwindow()), alignment: .center)
+                            self.customSheet = MyModal(view: AnyView(QRwindow()), type: .center)
                         }
                     }) {
                         UnderlinedButtonView(text: "Показать карту")
@@ -148,7 +148,7 @@ private struct LoyaltyCard: View {
                         Spacer()
                         Button(action: {
                             withAnimation {
-                                self.customSheet = (view: AnyView(Instruction()), alignment: .bottom)
+                                self.customSheet = MyModal(view: AnyView(Instruction()), type: .bottom)
                             }
                         }) {
                             Image(systemName: "questionmark.circle")
@@ -264,7 +264,7 @@ struct MenuView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @Binding var customSheet: MyModal?
     @State private var yRange: [CGFloat] = []
     @State private var isAlert = false
     private let buttonHeight: CGFloat = 48
@@ -299,7 +299,7 @@ struct MenuView: View {
                         return
                     }
                     withAnimation {
-                        self.customSheet = (view: AnyView(ImageZoomView(image: uiImage)), alignment: .bottom)
+                        self.customSheet = MyModal(view: AnyView(ImageZoomView(image: uiImage)), type: .bottom)
                     }
                 }) {
                     ZStack(alignment: .leading) {
@@ -331,7 +331,7 @@ struct MenuView: View {
         }
     }
     
-    init(_ customSheet: Binding<(view: AnyView, alignment: Alignment)?>, menu: FetchedResults<Menu>) {
+    init(_ customSheet: Binding<MyModal?>, menu: FetchedResults<Menu>) {
         maxY = UIImage(named: "cold_texture")!.size.height - self.buttonHeight
         self._customSheet = customSheet
         self.menu = menu

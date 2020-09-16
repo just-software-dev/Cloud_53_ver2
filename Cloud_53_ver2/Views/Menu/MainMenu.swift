@@ -69,7 +69,7 @@ private struct Standart: ViewModifier {
             MenuTitle(title: title)
                 .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
             content
-                .padding(.bottom, 90)
+                .padding(.bottom, 110)
         }.modifier(BottomKeyboard())
         .contentShape(Rectangle())
         .onTapGesture {
@@ -83,7 +83,7 @@ struct MainMenu: View {
     @ObservedObject private var keyboardResponder = KeyboardResponder()
     @State private var sections: [DiscountSection] = []
     @State private var selection = 0
-    @State private var customSheet: (view: AnyView, alignment: Alignment)? = nil
+    @State private var customSheet: MyModal? = nil
     private let titles = ["Здравствуйте!", "Акции", "Парковка", "Аккаунт"]
     private let images: [UIImage] = [UIImage(named: "menu_icon")!, UIImage(named: "percent")!, UIImage(named: "p")!, UIImage(named: "person")!]
     
@@ -103,7 +103,7 @@ struct MainMenu: View {
                     } else if selection == 2 {
                         ParkingView()
                     } else if selection == 3 {
-                        AccountView(customSheet: self.$customSheet)
+                        AccountView()
                     }
                 }.modifier(Standart(title: titles[selection]))
             }.zIndex(2)
@@ -112,7 +112,7 @@ struct MainMenu: View {
                 FigmaTabBar(selection: self.$selection, images: self.images)
                     .padding(.bottom, 27)
             }.zIndex(3)
-        }.customSheetView(view: self.$customSheet)
+        }.customSheetView(self.$customSheet)
     }
 }
 
@@ -131,32 +131,37 @@ private struct TouchView: View {
     }
 }
 
+struct MyModal {
+    var view: AnyView
+    var type: Alignment
+}
+
 private extension View {
     
-    func customSheetView(view: Binding<(view: AnyView, alignment: Alignment)?>) -> some View {
+    func customSheetView(_ modal: Binding<MyModal?>) -> some View {
         ZStack {
             self.zIndex(1)
-            if view.wrappedValue != nil {
+            if modal.wrappedValue != nil {
                 Color.blackout(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .zIndex(2)
                 Group {
-                    if view.wrappedValue!.alignment == .bottom {
+                    if modal.wrappedValue!.type == .bottom {
                         VStack {
                             Spacer()
-                            view.wrappedValue!.view
+                            modal.wrappedValue!.view
                                 .clipShape(RoundedCorners(tl: 25, tr: 25))
                         }.transition(.move(edge: .bottom))
                         .edgesIgnoringSafeArea(.all)
-                    } else if view.wrappedValue!.alignment == .center || view.wrappedValue!.alignment == .top {
-                        view.wrappedValue!.view
+                    } else if modal.wrappedValue!.type == .center {
+                        modal.wrappedValue!.view
                             .cornerRadius(30)
                             .padding(Figma.x(20))
                     }
-                }.zIndex(4)
-                TouchView(whenReturn: {view.wrappedValue = nil})
+                }.zIndex(3)
+                TouchView(whenReturn: {modal.wrappedValue = nil})
                     .edgesIgnoringSafeArea(.all)
-                    .zIndex(view.wrappedValue!.alignment == Alignment.top ? 3 : 5)
+                    .zIndex(4)
             }
         }
     }

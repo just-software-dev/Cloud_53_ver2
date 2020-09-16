@@ -17,39 +17,58 @@ private struct DevInform: Hashable {
 
 private struct DevsView: View {
     
+    @Binding var isDevs: Bool
     private var devs = [DevInform(id: "maks", name: "Макс", button: "Связаться с Максом"),
                         DevInform(id: "andrey", name: "Андрей", button: "Связаться с Андреем")]
     
     var body: some View {
-        VStack(spacing: 42) {
-            HStack(spacing: Figma.x(56)) {
-                ForEach(devs, id: \.self) { dev in
-                    VStack(spacing: 9) {
-                        Image(dev.id)
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(Circle())
-                            .frame(height: Figma.x(92))
-                        Text(dev.name)
-                            .font(.SFUIDisplay(16))
-                    }
+        ZStack {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {self.isDevs.toggle()}) {
+                        Image(systemName: "multiply")
+                        .resizable()
+                        .font(Font.title.weight(.light))
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Figma.lightGray)
+                    }.padding(30)
                 }
+                Spacer()
             }
-            VStack(spacing: 22) {
-                ForEach(devs, id: \.self) { dev in
-                    Button(action: {
-                        guard let s = UserDefaults.standard.string(forKey: dev.id), let url = URL(string: s) else {
-                            return
+            VStack(spacing: 42) {
+                HStack(spacing: Figma.x(56)) {
+                    ForEach(devs, id: \.self) { dev in
+                        VStack(spacing: 9) {
+                            Image(dev.id)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .frame(height: Figma.x(92))
+                            Text(dev.name)
+                                .font(.SFUIDisplay(16))
                         }
-                        UIApplication.shared.open(url)
-                    }) {
-                        FigmaButtonView(text: dev.button, loading: false, type: .secondary)
-                            .frame(width: Figma.x(290))
+                    }
+                }
+                VStack(spacing: 22) {
+                    ForEach(devs, id: \.self) { dev in
+                        Button(action: {
+                            guard let s = UserDefaults.standard.string(forKey: dev.id), let url = URL(string: s) else {
+                                return
+                            }
+                            UIApplication.shared.open(url)
+                        }) {
+                            FigmaButtonView(text: dev.button, loading: false, type: .secondary)
+                                .frame(width: Figma.x(290))
+                        }
                     }
                 }
             }
-        }.padding(EdgeInsets(top: 37, leading: 23, bottom: 46, trailing: 23))
-        .background(Color.black)
+        }.background(Color.black)
+    }
+    
+    fileprivate init(isDevs: Binding<Bool>) {
+        self._isDevs = isDevs
     }
 }
 
@@ -68,7 +87,7 @@ struct AccountView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @Binding var customSheet: (view: AnyView, alignment: Alignment)?
+    @State var isDevs = false
     
     @State private var name = ""
     @State private var phone = Auth.auth().currentUser?.phoneNumber ?? ""
@@ -133,7 +152,7 @@ struct AccountView: View {
             }
             Button(action: {
                 withAnimation {
-                    self.customSheet = (view: AnyView(DevsView()), alignment: .top)
+                    self.isDevs.toggle()
                 }
             }) {
                 HStack {
@@ -147,6 +166,9 @@ struct AccountView: View {
         }
         .onAppear() {
             self.name = self.mc.user?.name ?? ""
+        }
+        .sheet(isPresented: self.$isDevs) {
+            DevsView(isDevs: self.$isDevs)
         }
     }
     
