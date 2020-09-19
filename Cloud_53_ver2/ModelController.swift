@@ -68,7 +68,6 @@ class ModelController: ObservableObject {
     private let appleLogin = AppleLogin()
     private let phoneLogin = PhoneLogin()
     let coreDataHelper = CoreDataHelper()
-    private var token: String? = UserDefaults.standard.string(forKey: "token")
     private var isDefaultDiscount: Bool = false
     
     private func setSection(section: AppSection, isAnimation: Bool = false) {
@@ -84,9 +83,6 @@ class ModelController: ObservableObject {
         }
         updateSection()
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if self.user == nil && Auth.auth().currentUser != nil {
-                self.setToken()
-            }
             self.start()
             self.updateSection()
         }
@@ -153,20 +149,10 @@ class ModelController: ObservableObject {
         DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/car", value: car, completion: completion)
     }
     
-    func setToken() {
-        guard let user = Auth.auth().currentUser else {return}
-        let token = randomNonceString(length: 16)
-        self.token = token
-        UserDefaults.standard.set(token, forKey: "token")
-        DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/token", value: token)
-    }
-    
     private func resetData() {
         user = nil
-        token = nil
         UserDefaults.standard.set(nil, forKey: "name")
         UserDefaults.standard.set(nil, forKey: "car")
-        UserDefaults.standard.set(nil, forKey: "token")
     }
     
     func logOut() {
@@ -207,11 +193,6 @@ extension ModelController {
                     if car != self.user!.car {
                         UserDefaults.standard.set(car, forKey: "car")
                         self.user!.car = car
-                    }
-                }
-                if let token = dict["token"] {
-                    if token != self.token {
-                        self.logOut()
                     }
                 } else {
                     self.logOut()
