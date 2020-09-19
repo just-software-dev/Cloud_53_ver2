@@ -164,17 +164,9 @@ class ModelController: ObservableObject {
     private func resetData() {
         user = nil
         token = nil
-        coreDataHelper.deleteData(entity: "Menu")
-        coreDataHelper.deleteData(entity: "Promo")
         UserDefaults.standard.set(nil, forKey: "name")
         UserDefaults.standard.set(nil, forKey: "car")
         UserDefaults.standard.set(nil, forKey: "token")
-        UserDefaults.standard.set(nil, forKey: "loyalty")
-        UserDefaults.standard.set(nil, forKey: "instagram")
-        UserDefaults.standard.set(nil, forKey: "apple_geo")
-        UserDefaults.standard.set(nil, forKey: "phone")
-        UserDefaults.standard.set(nil, forKey: "andrey")
-        UserDefaults.standard.set(nil, forKey: "maks")
     }
     
     func logOut() {
