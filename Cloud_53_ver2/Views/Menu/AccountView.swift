@@ -65,6 +65,7 @@ private struct DevsView: View {
                 }
             }
         }.background(Color.black)
+        .edgesIgnoringSafeArea(.all)
     }
     
     fileprivate init(isDevs: Binding<Bool>) {
