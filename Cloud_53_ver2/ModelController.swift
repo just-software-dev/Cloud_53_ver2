@@ -194,8 +194,6 @@ extension ModelController {
                         UserDefaults.standard.set(car, forKey: "car")
                         self.user!.car = car
                     }
-                } else {
-                    self.logOut()
                 }
             }
         }
