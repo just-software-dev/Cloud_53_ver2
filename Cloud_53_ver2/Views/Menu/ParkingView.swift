@@ -53,17 +53,15 @@ struct ParkingView: View {
         self.changeMessage(nil)
         self.isLoading = true
         let data = ParkingData(name: self.name, car: self.carNumber, phone: self.phone, uid: Auth.auth().currentUser!.uid)
-        DataMonitoring.shareInstance.get(path: "information/parking") { (snapshot) in
+        DataMonitoring.shareInstance.get(path: "information/parking/link") { (snapshot) in
             DispatchQueue.main.async {
-                guard let dict = snapshot.value as? [String: String],
-                    let link = dict["link"],
-                    let token = dict["token"]
+                guard let link = snapshot.value as? String
                 else {
                     self.changeMessage("Данная функция временно недоступна")
                     self.isLoading = false
                     return
                 }
-                MyHTTP.POST(url: link, data: data, token: token) { result in
+                MyHTTP.POST(url: link, data: data) { result in
                     self.isLoading = false
                     switch result {
                     case .success(let data):
