@@ -134,11 +134,14 @@ struct AccountView: View {
             }
             Message(text: self.message, defaultHeight: 24)
             VStack(spacing: 17) {
-                Button(action: {
-                    UIApplication.shared.closeKeyboard()
+//                Button(action: {
+//                    UIApplication.shared.closeKeyboard()
+//                    self.changeData()
+//                }) {
+//                    FigmaButtonView(text: "Изменить данные", loading: self.isLoading, type: .primary)
+//                }
+                FigmaButton(text: "Изменить данные", loading: self.isLoading, type: .primary) {
                     self.changeData()
-                }) {
-                    FigmaButtonView(text: "Изменить данные", loading: self.isLoading, type: .primary)
                 }
                 if authStatus == .phone {
                     AppleButton(mode: .link, action: {self.changeMessage(nil, add: false)}, completion: self.setApple)

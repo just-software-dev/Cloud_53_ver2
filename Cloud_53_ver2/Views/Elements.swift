@@ -77,6 +77,66 @@ struct FigmaButtonView: View {
     }
 }
 
+struct FigmaButton: View {
+    
+    var action: () -> Void
+    var text: String?
+    var image: UIImage?
+    var loading: Bool
+    var type: ButtonType
+    var bgColor: Color
+    var contentColor: Color
+    
+    var body: some View {
+        Button(action: {
+            UIApplication.shared.closeKeyboard()
+            if !self.loading {
+                self.action()
+            }
+        }) {
+            ZStack {
+                self.bgColor
+                if self.loading {
+                    Loading(color: .white)
+                        .padding(7)
+                } else {
+                    if image != nil {
+                        Image(uiImage: image!)
+                            .renderingMode(.original)
+                            .resizable()
+                            .padding(10)
+                            .scaledToFit()
+                            .foregroundColor(contentColor)
+                    } else if text != nil {
+                        Text(text!)
+                            .font(.SFUIDisplay(17.5))
+                            .foregroundColor(contentColor)
+                    }
+                }
+                Spacer()
+            }.frame(height: 47)
+            .cornerRadius(30)
+        }
+    }
+    
+    init(text: String? = nil, image: UIImage? = nil, loading: Bool, type: ButtonType, action: @escaping () -> Void) {
+        self.action = action
+        self.text = text
+        self.image = image
+        self.loading = loading
+        self.type = type
+        
+        switch type {
+        case .primary:
+            self.bgColor = Figma.red
+            self.contentColor = .white
+        case .secondary:
+            self.bgColor = Figma.gray
+            self.contentColor = .white
+        }
+    }
+}
+
 struct UnderlinedButtonView: View {
     
     var text: String
