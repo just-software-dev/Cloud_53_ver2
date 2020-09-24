@@ -44,8 +44,8 @@ struct IntroView: View {
             SlideView(slideController: self.slideController, whenFinished: {self.mc.endIntro()})
             VStack {
                 Spacer()
-                Button(action: {self.slideController.next()}) {
-                    FigmaButtonView(text: "Далее", loading: false, type: .primary)
+                FigmaButton(text: "Далее", loading: false, type: .primary) {
+                    self.slideController.next()
                 }.padding(.bottom, 58)
             }
         }.padding(.horizontal, Figma.x(20))

@@ -52,15 +52,12 @@ private struct DevsView: View {
                 }
                 VStack(spacing: 22) {
                     ForEach(devs, id: \.self) { dev in
-                        Button(action: {
+                        FigmaButton(text: dev.button, loading: false, type: .secondary) {
                             guard let s = UserDefaults.standard.string(forKey: dev.id), let url = URL(string: s) else {
                                 return
                             }
                             UIApplication.shared.open(url)
-                        }) {
-                            FigmaButtonView(text: dev.button, loading: false, type: .secondary)
-                                .frame(width: Figma.x(290))
-                        }
+                        }.frame(width: Figma.x(290))
                     }
                 }
             }
@@ -134,27 +131,19 @@ struct AccountView: View {
             }
             Message(text: self.message, defaultHeight: 24)
             VStack(spacing: 17) {
-//                Button(action: {
-//                    UIApplication.shared.closeKeyboard()
-//                    self.changeData()
-//                }) {
-//                    FigmaButtonView(text: "Изменить данные", loading: self.isLoading, type: .primary)
-//                }
                 FigmaButton(text: "Изменить данные", loading: self.isLoading, type: .primary) {
                     self.changeData()
                 }
                 if authStatus == .phone {
                     AppleButton(mode: .link, action: {self.changeMessage(nil, add: false)}, completion: self.setApple)
                 }
-                Button(action: {
-                    UIApplication.shared.closeKeyboard()
+                FigmaButton(text: "Выйти", loading: false, type: .secondary) {
                     self.alertCase = .exit
                     self.showingAlert = true
-                }) {
-                    FigmaButtonView(text: "Выйти", loading: false, type: .secondary)
                 }
             }
             Button(action: {
+                UIApplication.shared.closeKeyboard()
                 self.isDevs.toggle()
             }) {
                 HStack {

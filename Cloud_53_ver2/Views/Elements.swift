@@ -32,8 +32,8 @@ struct FigmaButtonView: View {
     var image: UIImage?
     var loading: Bool
     var type: ButtonType
-    var bgColor: Color
-    var contentColor: Color
+    private var bgColor: Color
+    private var contentColor: Color
     
     var body: some View {
         ZStack {
@@ -84,8 +84,6 @@ struct FigmaButton: View {
     var image: UIImage?
     var loading: Bool
     var type: ButtonType
-    var bgColor: Color
-    var contentColor: Color
     
     var body: some View {
         Button(action: {
@@ -94,28 +92,7 @@ struct FigmaButton: View {
                 self.action()
             }
         }) {
-            ZStack {
-                self.bgColor
-                if self.loading {
-                    Loading(color: .white)
-                        .padding(7)
-                } else {
-                    if image != nil {
-                        Image(uiImage: image!)
-                            .renderingMode(.original)
-                            .resizable()
-                            .padding(10)
-                            .scaledToFit()
-                            .foregroundColor(contentColor)
-                    } else if text != nil {
-                        Text(text!)
-                            .font(.SFUIDisplay(17.5))
-                            .foregroundColor(contentColor)
-                    }
-                }
-                Spacer()
-            }.frame(height: 47)
-            .cornerRadius(30)
+            FigmaButtonView(text: text, image: image, loading: loading, type: type)
         }
     }
     
@@ -125,15 +102,6 @@ struct FigmaButton: View {
         self.image = image
         self.loading = loading
         self.type = type
-        
-        switch type {
-        case .primary:
-            self.bgColor = Figma.red
-            self.contentColor = .white
-        case .secondary:
-            self.bgColor = Figma.gray
-            self.contentColor = .white
-        }
     }
 }
 

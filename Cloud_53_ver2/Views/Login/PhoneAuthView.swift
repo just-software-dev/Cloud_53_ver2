@@ -43,18 +43,12 @@ struct PhoneAuthView: View {
             SlideView(slideController: self.slideController, whenReturned: {self.isActive = false}, whenFinished: {})
             VStack(spacing: 0) {
                 Message(text: message, defaultHeight: 51)
-                Button(action: {
-                    UIApplication.shared.closeKeyboard()
+                FigmaButton(text: "Далее", loading: self.isLoading, type: .primary) {
                     self.action()
-                }) {
-                    FigmaButtonView(text: "Далее", loading: self.isLoading, type: .primary)
                 }
-                Button(action: {
-                    UIApplication.shared.closeKeyboard()
+                FigmaButton(text: "Назад", loading: false, type: .secondary) {
                     self.changeMessage(nil)
                     self.slideController.back()
-                }) {
-                    FigmaButtonView(text: "Назад", loading: false, type: .secondary)
                 }.padding(.top, 17)
                 KeyboardBorder(keyboardResponder: keyboardResponder)
                     .padding(.top, 10)

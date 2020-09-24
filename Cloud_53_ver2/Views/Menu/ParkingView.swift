@@ -34,12 +34,9 @@ struct ParkingView: View {
                 .padding(.bottom, 15)
             FigmaTextField.phone(input: self.$phone)
                 .padding(.bottom, 33)
-            Button(action: {
-                UIApplication.shared.closeKeyboard()
+            FigmaButton(text: "Заказать парковку", loading: self.isLoading, type: .primary) {
                 self.mc.setCarNumber(self.carNumber)
                 self.request()
-            }) {
-                FigmaButtonView(text: "Заказать парковку", loading: self.isLoading, type: .primary)
             }
             Message(text: self.message, defaultHeight: 44)
         }.padding(EdgeInsets(top: 35, leading: 23, bottom: 0, trailing: 23))

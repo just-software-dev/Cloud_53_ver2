@@ -194,8 +194,8 @@ private struct GrayButton: View {
     private var i: Int
     
     var body: some View {
-        Button(action: {self.action()}) {
-            FigmaButtonView(image: UIImage(named: iconName), loading: false, type: .secondary)
+        FigmaButton(image: UIImage(named: iconName), loading: false, type: .secondary) {
+            self.action()
         }.onAppear() {
             switch self.i {
             case 0:

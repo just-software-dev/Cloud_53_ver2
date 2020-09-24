@@ -32,6 +32,7 @@ struct AppleButton: View {
     
     var body: some View {
         UIAppleButton(type: type).onTapGesture {
+            UIApplication.shared.closeKeyboard()
             self.action?()
             self.mc.appleAuth(mode: self.mode, completion: self.completion)
         }.frame(height: 47)
