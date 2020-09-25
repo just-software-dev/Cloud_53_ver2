@@ -200,6 +200,7 @@ struct AccountView: View {
                         switch result {
                         case .success:
                             self.changeMessage("Новый номер телефона привязан успешно.")
+                            self.mc.increaseUserVersion()
                             self.changeIsCode(false)
                         case .failure(let error):
                             self.changeMessage(error.myDescription)
@@ -211,6 +212,7 @@ struct AccountView: View {
                         switch result {
                         case .success:
                             self.changeMessage("Номер телефона привязан успешно.")
+                            self.mc.increaseUserVersion()
                             self.changeIsCode(false)
                         case .failure(let error):
                             self.changeMessage(error.myDescription)

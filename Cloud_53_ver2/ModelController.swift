@@ -82,9 +82,13 @@ class ModelController: ObservableObject {
             UserDefaults.standard.set(true, forKey: "endIntro")
         }
         updateSection()
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            self.start()
-            self.updateSection()
+        handle = Auth.auth().addStateDidChangeListener { [unowned model = self] (auth, user) in
+            if model.user != nil && user == nil {
+                DataMonitoring.shareInstance.removeObservers()
+                model.resetData()
+            }
+            model.start()
+            model.updateSection()
         }
         Auth.auth().languageCode = "ru"
     }
@@ -110,6 +114,11 @@ class ModelController: ObservableObject {
     func endIntro() {
         UserDefaults.standard.set(true, forKey: "endIntro")
         updateSection()
+    }
+    
+    func increaseUserVersion() {
+        let newVersion: Int = UserDefaults.standard.integer(forKey: "account_version") + 1
+        DataMonitoring.shareInstance.set(path: "users/\(Auth.auth().currentUser!.uid)/open/account_version", value: newVersion)
     }
     
     func enterPhone(phone: String, completion: @escaping(Result<String, Error>) -> Void) {
@@ -153,16 +162,19 @@ class ModelController: ObservableObject {
         user = nil
         UserDefaults.standard.set(nil, forKey: "name")
         UserDefaults.standard.set(nil, forKey: "car")
+        UserDefaults.standard.set(nil, forKey: "menu_version")
+        UserDefaults.standard.set(nil, forKey: "promo_version")
+        UserDefaults.standard.set(nil, forKey: "account_version")
     }
     
     func logOut() {
         let firebaseAuth = Auth.auth()
-        DataMonitoring.shareInstance.removeObservers()
-        resetData()
         do {
             try firebaseAuth.signOut()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+            DataMonitoring.shareInstance.removeObservers()
+            self.resetData()
             self.setSection(section: .auth, isAnimation: true)
         }
     }
@@ -176,24 +188,39 @@ extension ModelController {
         DataMonitoring.shareInstance.observe(path: "users/\(Auth.auth().currentUser!.uid)/open") { (snapshot) in
             DispatchQueue.main.async {
                 if !snapshot.exists() {
-                    self.logOut()
+                    print("No data")
+                    Auth.auth().currentUser!.reload() { (error) in
+                        DispatchQueue.main.async {
+                            if Auth.auth().currentUser != nil {
+                                self.increaseUserVersion()
+                            }
+                        }
+                    }
                     return
                 }
-                guard let dict = snapshot.value as? [String: String] else {
+                guard let dict = snapshot.value as? [String: Any] else {
                     print("Isn't dict")
                     return
                 }
-                if let name = dict["name"] {
+                if let name = dict["name"] as? String {
                     if name != self.user!.name {
                         UserDefaults.standard.set(name, forKey: "name")
                         self.user!.name = name
                     }
                 }
-                if let car = dict["car"] {
+                if let car = dict["car"] as? String {
                     if car != self.user!.car {
                         UserDefaults.standard.set(car, forKey: "car")
                         self.user!.car = car
                     }
+                }
+                if let ver = dict["account_version"] as? Int {
+                    if ver != UserDefaults.standard.integer(forKey: "account_version") {
+                        Auth.auth().currentUser!.reload()
+                        UserDefaults.standard.set(ver, forKey: "account_version")
+                    }
+                } else {
+                    self.increaseUserVersion()
                 }
             }
         }
@@ -285,7 +312,7 @@ extension ModelController {
                     print("Incorrect value")
                     return
                 }
-                self.user!.discount = discount
+                self.user?.discount = discount
             }
         }
     }
