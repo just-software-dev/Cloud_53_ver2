@@ -18,10 +18,10 @@ class CoreDataHelper: ObservableObject {
     private func add<SomeItem: MyEntityItem>(_ item: SomeItem, id: Int) {
         DataMonitoring.shareInstance.downloadImage(path: item.image) { data, error in
             DispatchQueue.main.async {
+                self.deleteData(entity: SomeItem.entityName, id: id)
                 if let error = error {
                     print("Image download error: \(error.localizedDescription)")
                 } else if let data = data {
-                    self.deleteData(entity: SomeItem.entityName, id: id)
                     item.insert(context: self.context, id: id, image: data)
                     if SomeItem.self == PromoItem.self {
                         self.promoUpdate += 1

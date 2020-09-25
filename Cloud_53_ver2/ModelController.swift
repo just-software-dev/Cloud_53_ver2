@@ -160,11 +160,13 @@ class ModelController: ObservableObject {
     
     private func resetData() {
         user = nil
+        coreDataHelper.deleteData(entity: "Menu")
+        coreDataHelper.deleteData(entity: "Promo")
         UserDefaults.standard.set(nil, forKey: "name")
         UserDefaults.standard.set(nil, forKey: "car")
+        UserDefaults.standard.set(nil, forKey: "account_version")
         UserDefaults.standard.set(nil, forKey: "menu_version")
         UserDefaults.standard.set(nil, forKey: "promo_version")
-        UserDefaults.standard.set(nil, forKey: "account_version")
     }
     
     func logOut() {
@@ -242,6 +244,20 @@ extension ModelController {
                 if let phone = dict["phone"] as? String {
                     UserDefaults.standard.set(phone, forKey: "phone")
                 }
+                if let menuVersion = dict["menu_version"] as? Int {
+                    if menuVersion != UserDefaults.standard.integer(forKey: "menu_version") {
+                        let _: Menu? = self.download() {
+                            UserDefaults.standard.set(menuVersion, forKey: "menu_version")
+                        }
+                    }
+                }
+                if let promoVersion = dict["promo_version"] as? Int {
+                    if promoVersion != UserDefaults.standard.integer(forKey: "promo_version") {
+                        let _: Promo? = self.download() {
+                            UserDefaults.standard.set(promoVersion, forKey: "promo_version")
+                        }
+                    }
+                }
             }
         }
         DataMonitoring.shareInstance.observe(path: "information/devs") { (snapshot) in
@@ -275,26 +291,24 @@ extension ModelController {
                 self.user!.discount = discount
             }
         }
-        let _: Promo? = self.download()
-        let _: Menu? = self.download()
     }
     
-    private func download<SomeEntity: MyEntity>() -> SomeEntity? {
+    private func download<SomeEntity: MyEntity>(completion: (() -> Void)? = nil) -> SomeEntity? {
         var path = ""
         if SomeEntity.self == Promo.self {
             path = "information/promo"
         } else if SomeEntity.self == Menu.self {
             path = "information/menu"
         }
-        DataMonitoring.shareInstance.observe(path: path) { (snapshot) in
+        DataMonitoring.shareInstance.get(path: path) { (snapshot) in
             DispatchQueue.main.async {
-                guard let menu = snapshot.value as? [String: [String: Any]] else {
-                    return
+                if let menu = snapshot.value as? [String: [String: Any]] {
+                    let elements = SomeEntity.dictToItems(menu: menu)
+                    withAnimation {
+                        self.coreDataHelper.update(elements)
+                    }
                 }
-                let elements = SomeEntity.dictToItems(menu: menu)
-                withAnimation {
-                    self.coreDataHelper.update(elements)
-                }
+                completion?()
             }
         }
         return nil
