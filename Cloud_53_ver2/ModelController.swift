@@ -93,7 +93,6 @@ class ModelController: ObservableObject {
         Auth.auth().languageCode = "ru"
     }
     
-//    Используется для определения того, в какой секции в данный момент находится пользователь
     private func updateSection() {
         if Auth.auth().currentUser == nil {
             if !UserDefaults.standard.bool(forKey: "endIntro") {
@@ -117,7 +116,6 @@ class ModelController: ObservableObject {
         updateSection()
     }
     
-//    Сохранение в БД информации о том, что пользователь обновил информацию о себе
     func increaseUserVersion() {
         let newVersion: Int = UserDefaults.standard.integer(forKey: "account_version") + 1
         DataMonitoring.shareInstance.set(path: "users/\(Auth.auth().currentUser!.uid)/open/account_version", value: newVersion)
@@ -186,7 +184,6 @@ class ModelController: ObservableObject {
 
 extension ModelController {
     
-//    Запускается, когда пользователь заходит в аккаунт или уже авториованный заходит в приложение
     private func start() {
         if user != nil || Auth.auth().currentUser == nil {return}
         user = UserInformation(name: UserDefaults.standard.string(forKey: "name") ?? "", car: UserDefaults.standard.string(forKey: "car") ?? "", discount: nil)
