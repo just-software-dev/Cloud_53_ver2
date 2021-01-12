@@ -180,10 +180,10 @@ private struct Instruction: View {
                 Text(self.text).font(.SFUIDisplay(16))
                 Spacer().frame(height: bottomSpace)
             }.padding(EdgeInsets(top: Figma.y(39), leading: Figma.x(33), bottom: Figma.y(54), trailing: Figma.x(33)))
-            .background(Figma.darkGray.clipShape(RoundedCorners(tl: 25, tr: 25)))
             .padding(.bottom, -bottomSpace)
         }
         .frame(height: self.height)
+        .background(Figma.darkGray)
     }
 }
 
