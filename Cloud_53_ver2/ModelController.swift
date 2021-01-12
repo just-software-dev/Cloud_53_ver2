@@ -55,6 +55,7 @@ private enum AuthType {
 struct UserInformation {
     var name: String
     var car: String
+    var carBrand: String
     var discount: Int?
 }
 
@@ -158,15 +159,20 @@ class ModelController: ObservableObject {
         DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/car", value: car, completion: completion)
     }
     
+    func setCarBrand(_ carBrand: String, completion: ((Error?, DatabaseReference) -> Void)? = nil) {
+        guard let user = Auth.auth().currentUser else {return}
+        UserDefaults.standard.set(carBrand, forKey: "car_brand")
+        DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/car_brand", value: carBrand, completion: completion)
+    }
+    
     private func resetData() {
         user = nil
         coreDataHelper.deleteData(entity: "Menu")
         coreDataHelper.deleteData(entity: "Promo")
         UserDefaults.standard.set(nil, forKey: "name")
         UserDefaults.standard.set(nil, forKey: "car")
+        UserDefaults.standard.set(nil, forKey: "car_brand")
         UserDefaults.standard.set(nil, forKey: "account_version")
-        UserDefaults.standard.set(nil, forKey: "menu_version")
-        UserDefaults.standard.set(nil, forKey: "promo_version")
     }
     
     func logOut() {
@@ -186,7 +192,12 @@ extension ModelController {
     
     private func start() {
         if user != nil || Auth.auth().currentUser == nil {return}
-        user = UserInformation(name: UserDefaults.standard.string(forKey: "name") ?? "", car: UserDefaults.standard.string(forKey: "car") ?? "", discount: nil)
+        user = UserInformation(
+            name: UserDefaults.standard.string(forKey: "name") ?? "",
+            car: UserDefaults.standard.string(forKey: "car") ?? "",
+            carBrand: UserDefaults.standard.string(forKey: "car_brand") ?? "",
+            discount: nil
+        )
         DataMonitoring.shareInstance.observe(path: "users/\(Auth.auth().currentUser!.uid)/open") { (snapshot) in
             DispatchQueue.main.async {
                 if !snapshot.exists() {
@@ -216,6 +227,12 @@ extension ModelController {
                         self.user!.car = car
                     }
                 }
+                if let carBrand = dict["car_brand"] as? String {
+                    if carBrand != self.user!.carBrand {
+                        UserDefaults.standard.set(carBrand, forKey: "car_brand")
+                        self.user!.carBrand = carBrand
+                    }
+                }
                 if let ver = dict["account_version"] as? Int {
                     if ver != UserDefaults.standard.integer(forKey: "account_version") {
                         Auth.auth().currentUser!.reload()
@@ -243,20 +260,6 @@ extension ModelController {
                 }
                 if let phone = dict["phone"] as? String {
                     UserDefaults.standard.set(phone, forKey: "phone")
-                }
-                if let menuVersion = dict["menu_version"] as? Int {
-                    if menuVersion != UserDefaults.standard.integer(forKey: "menu_version") {
-                        let _: Menu? = self.download() {
-                            UserDefaults.standard.set(menuVersion, forKey: "menu_version")
-                        }
-                    }
-                }
-                if let promoVersion = dict["promo_version"] as? Int {
-                    if promoVersion != UserDefaults.standard.integer(forKey: "promo_version") {
-                        let _: Promo? = self.download() {
-                            UserDefaults.standard.set(promoVersion, forKey: "promo_version")
-                        }
-                    }
                 }
             }
         }
@@ -291,6 +294,8 @@ extension ModelController {
                 self.user!.discount = discount
             }
         }
+        let _: Menu? = self.download()
+        let _: Promo? = self.download()
     }
     
 //    Скачивание меню/акций
@@ -301,7 +306,7 @@ extension ModelController {
         } else if SomeEntity.self == Menu.self {
             path = "information/menu"
         }
-        DataMonitoring.shareInstance.get(path: path) { (snapshot) in
+        DataMonitoring.shareInstance.observe(path: path) { (snapshot) in
             DispatchQueue.main.async {
                 if let menu = snapshot.value as? [String: [String: Any]] {
                     let elements = SomeEntity.dictToItems(menu: menu)

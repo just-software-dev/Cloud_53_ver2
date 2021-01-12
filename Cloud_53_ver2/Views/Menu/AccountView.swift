@@ -240,6 +240,7 @@ struct AccountView: View {
         switch result {
         case .success(let result):
             self.changeMessage("Ваш аккаунт Apple успешно привязан")
+            self.mc.increaseUserVersion()
             withAnimation {
                 self.authStatus = .both
             }

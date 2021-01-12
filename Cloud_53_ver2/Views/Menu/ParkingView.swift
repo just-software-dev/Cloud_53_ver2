@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 
 private struct ParkingData: Encodable {
-    var name: String
+    var car_brand: String
     var car: String
     var phone: String
     var uid: String
@@ -20,7 +20,7 @@ struct ParkingView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @State private var name = ""
+    @State private var carBrand = ""
     @State private var carNumber = ""
     @State private var phone = Auth.auth().currentUser?.phoneNumber ?? ""
     @State private var message: String?
@@ -28,14 +28,13 @@ struct ParkingView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            FigmaTextField.name(input: self.$name)
+            FigmaTextField(text: "Марка машины", input: self.$carBrand, maxLength: 30)
                 .padding(.bottom, 15)
             FigmaTextField(text: "Номер машины", input: self.$carNumber, maxLength: 9)
                 .padding(.bottom, 15)
             FigmaTextField.phone(input: self.$phone)
                 .padding(.bottom, 33)
             FigmaButton(text: "Заказать парковку", loading: self.isLoading, type: .primary) {
-                self.mc.setCarNumber(self.carNumber)
                 self.request()
             }
             Message(text: self.message, defaultHeight: 44)
@@ -44,7 +43,7 @@ struct ParkingView: View {
         .padding(.horizontal)
         .onAppear() {
             guard let user = self.mc.user else {return}
-            self.name = user.name
+            self.carBrand = user.carBrand
             self.carNumber = user.car
         }
     }
@@ -52,7 +51,9 @@ struct ParkingView: View {
     private func request() {
         self.changeMessage(nil)
         self.isLoading = true
-        let data = ParkingData(name: self.name, car: self.carNumber, phone: self.phone, uid: Auth.auth().currentUser!.uid)
+        self.mc.setCarNumber(self.carNumber)
+        self.mc.setCarBrand(self.carBrand)
+        let data = ParkingData(car_brand: self.carBrand, car: self.carNumber, phone: self.phone, uid: Auth.auth().currentUser!.uid)
         DataMonitoring.shareInstance.get(path: "information/parking/link") { (snapshot) in
             DispatchQueue.main.async {
                 guard let link = snapshot.value as? String
