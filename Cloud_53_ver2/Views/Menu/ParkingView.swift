@@ -9,13 +9,6 @@
 import SwiftUI
 import FirebaseAuth
 
-private struct ParkingData: Encodable {
-    var car_brand: String
-    var car: String
-    var phone: String
-    var uid: String
-}
-
 struct ParkingView: View {
     
     @EnvironmentObject var mc: ModelController
@@ -53,25 +46,10 @@ struct ParkingView: View {
         self.isLoading = true
         self.mc.setCarNumber(self.carNumber)
         self.mc.setCarBrand(self.carBrand)
-        let data = ParkingData(car_brand: self.carBrand, car: self.carNumber, phone: self.phone, uid: Auth.auth().currentUser!.uid)
-        DataMonitoring.shareInstance.get(path: "information/parking/link") { (snapshot) in
-            DispatchQueue.main.async {
-                guard let link = snapshot.value as? String
-                else {
-                    self.changeMessage("Данная функция временно недоступна")
-                    self.isLoading = false
-                    return
-                }
-                MyHTTP.POST(url: link, data: data) { result in
-                    self.isLoading = false
-                    switch result {
-                    case .success(let data):
-                        self.changeMessage(String(decoding: data, as: UTF8.self))
-                    case .failure(let error):
-                        self.changeMessage(error.localizedDescription)
-                    }
-                }
-            }
+        let data = ParkingData(car_brand: self.carBrand, car: self.carNumber, phone: self.phone)
+        mc.parkingRequest(data: data) { result in
+            self.changeMessage(result)
+            self.isLoading = false
         }
     }
     

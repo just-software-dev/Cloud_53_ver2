@@ -59,6 +59,12 @@ struct UserInformation {
     var discount: Int?
 }
 
+struct ParkingData: Encodable {
+    var car_brand: String
+    var car: String
+    var phone: String
+}
+
 class ModelController: ObservableObject {
     
     @Published private(set) var currentSection: AppSection = .intro
@@ -163,6 +169,40 @@ class ModelController: ObservableObject {
         guard let user = Auth.auth().currentUser else {return}
         UserDefaults.standard.set(carBrand, forKey: "car_brand")
         DataMonitoring.shareInstance.set(path: "users/\(user.uid)/open/car_brand", value: carBrand, completion: completion)
+    }
+    
+    func parkingRequest(data: ParkingData, completion: @escaping (String) -> Void) {
+        DataMonitoring.shareInstance.get(path: "information/parking/link") { (snapshot) in
+            DispatchQueue.main.async {
+                guard let link = snapshot.value as? String
+                else {
+                    completion("Данная функция временно недоступна")
+                    return
+                }
+                guard let currentUser = Auth.auth().currentUser else {
+                    completion("Ошибка. Вы не авторизованы")
+                    return
+                }
+                currentUser.getIDTokenForcingRefresh(true) { token, error in
+                    if let error = error {
+                        completion(error.myDescription)
+                        return
+                    }
+                    guard let token = token else {
+                        completion("Ошибка. Не удалось получить токен")
+                        return
+                    }
+                    MyHTTP.POST(url: link, data: data, token: token) { result in
+                        switch result {
+                        case .success(let data):
+                            completion(String(decoding: data, as: UTF8.self))
+                        case .failure(let error):
+                            completion(error.localizedDescription)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     private func resetData() {
