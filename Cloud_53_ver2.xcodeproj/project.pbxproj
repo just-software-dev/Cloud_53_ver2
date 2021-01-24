@@ -623,7 +623,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "-28.Oblako";
 				PRODUCT_NAME = "Облако 53";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -650,7 +650,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "-28.Oblako";
 				PRODUCT_NAME = "Облако 53";
 				SWIFT_VERSION = 5.0;
