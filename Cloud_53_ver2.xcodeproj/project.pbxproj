@@ -190,7 +190,6 @@
 		55286BAD24DF6A92000E606D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				55286BAE24DF6A92000E606D /* Elements.swift */,
 				55286BB524DF6A92000E606D /* IntroView.swift */,
 				55286BB624DF6A92000E606D /* Login */,
 				55286BAF24DF6A92000E606D /* Menu */,
@@ -247,6 +246,7 @@
 		556CE8E425D7321F00B237EC /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				55286BAE24DF6A92000E606D /* Elements.swift */,
 				556CE8E525D7325000B237EC /* AppleLoginButton.swift */,
 				55286BC024DF6A93000E606D /* CustomTextField.swift */,
 				55286BC224DF6A93000E606D /* RoundedCorners.swift */,

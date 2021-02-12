@@ -107,11 +107,13 @@ struct MainMenu: View {
                     }
                 }.modifier(Standart(title: titles[selection]))
             }.zIndex(2)
-            VStack {
-                Spacer()
-                FigmaTabBar(selection: self.$selection, images: self.images)
-                    .padding(.bottom, 27)
-            }.zIndex(3)
+            if keyboardResponder.keyboardHeight == 0 {
+                VStack {
+                    Spacer()
+                    FigmaTabBar(selection: self.$selection, images: self.images)
+                        .padding(.bottom, 27)
+                }.zIndex(3)
+            }
         }.customSheetView(self.$customSheet)
     }
 }
