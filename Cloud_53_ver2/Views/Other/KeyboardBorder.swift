@@ -63,9 +63,11 @@ class KeyboardResponder: ObservableObject {
     }
 
     @objc private func keyboardWillHide(notification: Notification) {
-        self.up_ = 0
-        self.isShow = false
-        self.keyboardHeight = 0
+        DispatchQueue.main.async {
+            self.up_ = 0
+            self.isShow = false
+            self.keyboardHeight = 0
+        }
     }
 }
 

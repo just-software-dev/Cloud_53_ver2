@@ -40,27 +40,22 @@ struct CustomTextField: UIViewRepresentable {
             }
         }
         
-        func lengthCheck(_ textField: UITextField) {
-            if let len = self.maxLength {
-                if textField.text != nil && textField.text!.count > len {
-                    let i = textField.text!.index(textField.text!.startIndex, offsetBy: len - 1)
-                    textField.text = String(textField.text![...i])
-                }
-            }
-        }
-        
         func textFieldDidChangeSelection(_ textField: UITextField) {
             DispatchQueue.main.async {
                 self.phoneCheck(textField)
-                self.lengthCheck(textField)
                 self.text = textField.text ?? ""
-                (self.onChanged ?? {})()
+                self.onChanged?()
             }
         }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             textField.resignFirstResponder()
             return false
+        }
+        
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            guard let maxLength = maxLength, let text = textField.text else { return true }
+            return string.count == 0 || string.count + text.count <= maxLength
         }
     }
     
