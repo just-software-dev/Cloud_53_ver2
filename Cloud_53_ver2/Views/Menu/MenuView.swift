@@ -168,22 +168,18 @@ private struct LoyaltyCard: View {
 private struct Instruction: View {
     
     private let height = UIScreen.main.bounds.height / 1.75
-    private let bottomSpace = UIScreen.main.bounds.height * 1.5
     @State private var title = "Накопительная карта гостя"
     @State private var text: String = UserDefaults.standard.string(forKey: "loyalty") ?? ""
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 14) {
                 Text(self.title).font(.SFUIDisplay(24))
-                    .padding(.bottom, 12)
                 Text(self.text).font(.SFUIDisplay(16))
-                Spacer().frame(height: bottomSpace)
-            }.padding(EdgeInsets(top: Figma.y(39), leading: Figma.x(33), bottom: Figma.y(54), trailing: Figma.x(33)))
-            .background(Figma.darkGray.clipShape(RoundedCorners(tl: 25, tr: 25)))
-            .padding(.bottom, -bottomSpace)
+            }.padding(EdgeInsets(top: Figma.y(39), leading: 33, bottom: Figma.y(54), trailing: 33))
         }
         .frame(height: self.height)
+        .background(Figma.darkGray)
     }
 }
 
