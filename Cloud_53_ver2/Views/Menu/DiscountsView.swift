@@ -106,14 +106,7 @@ struct DiscountsView: View {
                     Spacer().frame(width: 0, height: 0)
                 }
             }
-        }.onAppear() {
-            DispatchQueue.global(qos: .userInteractive).async {
-                if self.sections.count == 0 {
-                    self.update()
-                }
-            }
-        }
-        .onReceive(self.mc.coreDataHelper.$promoUpdate) { new in
+        }.onReceive(self.mc.coreDataHelper.$promoUpdate) { new in
             DispatchQueue.main.async {
                 self.update()
             }

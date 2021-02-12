@@ -156,7 +156,7 @@
 				55286BCB24DF6A94000E606D /* ContentView.swift */,
 				55286BB924DF6A92000E606D /* ModelController.swift */,
 				55286BAD24DF6A92000E606D /* Views */,
-				55286BBA24DF6A93000E606D /* Supporting */,
+				55286BBA24DF6A93000E606D /* Support */,
 				55286BCC24DF6A94000E606D /* Fonts */,
 				55286BA824DF6960000E606D /* Assets.xcassets */,
 				55286BA624DF6942000E606D /* StartScreen.storyboard */,
@@ -217,7 +217,7 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		55286BBA24DF6A93000E606D /* Supporting */ = {
+		55286BBA24DF6A93000E606D /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				55286BBB24DF6A93000E606D /* Error.swift */,
@@ -236,7 +236,7 @@
 				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
 				55286BC924DF6A93000E606D /* KeyboardBorder.swift */,
 			);
-			path = Supporting;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		55286BCC24DF6A94000E606D /* Fonts */ = {

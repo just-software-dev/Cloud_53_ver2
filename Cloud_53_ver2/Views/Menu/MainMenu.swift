@@ -70,7 +70,7 @@ private struct Standart: ViewModifier {
                 .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
             content
                 .padding(.bottom, 110)
-        }.modifier(BottomKeyboard())
+        }
         .contentShape(Rectangle())
         .onTapGesture {
             UIApplication.shared.closeKeyboard()

@@ -107,13 +107,3 @@ struct LiftContent: ViewModifier {
         }.edgesIgnoringSafeArea(.all)
     }
 }
-
-struct BottomKeyboard: ViewModifier {
-    
-    @ObservedObject private var keyboardResponder = KeyboardResponder()
-    
-    func body(content: Content) -> some View {
-        content
-            .padding(.bottom, keyboardResponder.keyboardHeight)
-    }
-}
