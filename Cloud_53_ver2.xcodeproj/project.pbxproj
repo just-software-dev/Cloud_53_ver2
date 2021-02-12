@@ -44,6 +44,7 @@
 		55286BEC24DF6A95000E606D /* SF UI Display Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55286BCE24DF6A94000E606D /* SF UI Display Regular.ttf */; };
 		55286BED24DF6A95000E606D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BCF24DF6A95000E606D /* AppDelegate.swift */; };
 		55286BF024DF6B06000E606D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55286BEF24DF6B06000E606D /* GoogleService-Info.plist */; };
+		556CE8E625D7325000B237EC /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556CE8E525D7325000B237EC /* AppleLoginButton.swift */; };
 		6BDE74527202AFB0693DB7F2 /* Pods_Cloud_53_ver2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08B398EFCCB79CEEDB5C812 /* Pods_Cloud_53_ver2.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		55286BCF24DF6A95000E606D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55286BEE24DF6ABB000E606D /* Облако 53.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Облако 53.entitlements"; sourceTree = "<group>"; };
 		55286BEF24DF6B06000E606D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		556CE8E525D7325000B237EC /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 		84291F253CA3FD70A4A3223A /* Pods-Cloud_53_ver2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud_53_ver2.release.xcconfig"; path = "Target Support Files/Pods-Cloud_53_ver2/Pods-Cloud_53_ver2.release.xcconfig"; sourceTree = "<group>"; };
 		A08B398EFCCB79CEEDB5C812 /* Pods_Cloud_53_ver2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cloud_53_ver2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE06E2C0882BA50E0CB9081E /* Pods-Cloud_53_ver2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud_53_ver2.debug.xcconfig"; path = "Target Support Files/Pods-Cloud_53_ver2/Pods-Cloud_53_ver2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				55286BB524DF6A92000E606D /* IntroView.swift */,
 				55286BB624DF6A92000E606D /* Login */,
 				55286BAF24DF6A92000E606D /* Menu */,
+				556CE8E425D7321F00B237EC /* Other */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,16 +228,9 @@
 				55286BBD24DF6A93000E606D /* CoreDataHelper.swift */,
 				55286BBE24DF6A93000E606D /* PhoneLogin.swift */,
 				55286BBF24DF6A93000E606D /* Extensions.swift */,
-				55286BC024DF6A93000E606D /* CustomTextField.swift */,
 				55286BC124DF6A93000E606D /* DataMonitoring.swift */,
-				55286BC224DF6A93000E606D /* RoundedCorners.swift */,
 				55286BC324DF6A93000E606D /* MyHTTP.swift */,
-				55286BC424DF6A93000E606D /* SlideView.swift */,
-				55286BC524DF6A93000E606D /* Loading.swift */,
-				55286BC624DF6A93000E606D /* QRcode.swift */,
 				55286BC724DF6A93000E606D /* Figma.swift */,
-				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
-				55286BC924DF6A93000E606D /* KeyboardBorder.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -246,6 +242,21 @@
 				55286BCE24DF6A94000E606D /* SF UI Display Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		556CE8E425D7321F00B237EC /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				556CE8E525D7325000B237EC /* AppleLoginButton.swift */,
+				55286BC024DF6A93000E606D /* CustomTextField.swift */,
+				55286BC224DF6A93000E606D /* RoundedCorners.swift */,
+				55286BC424DF6A93000E606D /* SlideView.swift */,
+				55286BC524DF6A93000E606D /* Loading.swift */,
+				55286BC624DF6A93000E606D /* QRcode.swift */,
+				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
+				55286BC924DF6A93000E606D /* KeyboardBorder.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		AED6BA84331C3C7CB9C3F9D0 /* Frameworks */ = {
@@ -446,6 +457,7 @@
 				55286BD724DF6A95000E606D /* LoginPage.swift in Sources */,
 				55286BED24DF6A95000E606D /* AppDelegate.swift in Sources */,
 				55286BD624DF6A95000E606D /* IntroView.swift in Sources */,
+				556CE8E625D7325000B237EC /* AppleLoginButton.swift in Sources */,
 				55286BDA24DF6A95000E606D /* Error.swift in Sources */,
 				55286BDD24DF6A95000E606D /* PhoneLogin.swift in Sources */,
 				55286BD024DF6A95000E606D /* Elements.swift in Sources */,
