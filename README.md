@@ -11,5 +11,4 @@ App Store: https://apps.apple.com/au/app/облако-53-университет/
 To install project:
 1. go to project's directory
 2. open command line
-3. write:
-  pod install
+3. write: pod install
