@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-private struct InformationView: SlidingView {
+private struct InformationView: View {
     
     var data: (title: String, image: String)
     
@@ -32,7 +32,7 @@ private struct InformationView: SlidingView {
 
 struct IntroView: View {
     
-    @ObservedObject private var slideController = SlideController<InformationView>()
+    @ObservedObject private var slideController = SlideController(3)
     @EnvironmentObject var mc: ModelController
     
     private let data = [(title: "Бесплатная паровка вашего авто!", image: "intro_car"),
@@ -41,7 +41,9 @@ struct IntroView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            SlideView(slideController: self.slideController, whenFinished: {self.mc.endIntro()})
+            SlideView(slideController: self.slideController) { step in
+                InformationView(data: data[step])
+            }
             VStack {
                 Spacer()
                 FigmaButton(text: "Далее", loading: false, type: .primary) {
@@ -50,7 +52,7 @@ struct IntroView: View {
             }
         }.padding(.horizontal, Figma.x(20))
         .onAppear() {
-            self.slideController.content = self.data
+            self.slideController.onFinished = { self.mc.endIntro() }
         }
     }
 }
