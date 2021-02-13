@@ -9,21 +9,14 @@
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 
-struct QRcode: View {
+class QRcode {
     
-    private let context = CIContext()
-    private let filter = CIFilter.qrCodeGenerator()
+    static let shared = QRcode()
     
-    @State var string: String
-    
-    var body: some View {
-        Image(uiImage: generateQR())
-            .interpolation(.none)
-            .resizable()
-    }
-    
-    func generateQR() -> UIImage {
-        let data = Data(string.utf8)
+    func generateQR(_ s: String) -> UIImage {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
+        let data = Data(s.utf8)
         filter.setValue(data, forKey: "inputMessage")
 
         if let outputImage = filter.outputImage {
@@ -34,10 +27,6 @@ struct QRcode: View {
 
         return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
-}
-
-struct QRcode_Previews: PreviewProvider {
-    static var previews: some View {
-        QRcode(string: "www.example.com")
-    }
+    
+    private init() {}
 }

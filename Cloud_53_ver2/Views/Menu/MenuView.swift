@@ -50,15 +50,16 @@ private struct TextureBackground: View {
 private struct QRwindow: View {
     
     @EnvironmentObject var mc: ModelController
-    @State var link: String?
+    @State var qrcode: UIImage?
     @State var message: String?
     
     var body: some View {
         ZStack {
-            if link != nil {
-                QRcode(string: link!)
+            if qrcode != nil {
+                Image(uiImage: qrcode!)
+                    .interpolation(.none)
+                    .resizable()
                     .scaledToFit()
-                    
             } else {
                 if message == nil {
                     Loading(color: .black)
@@ -96,8 +97,11 @@ private struct QRwindow: View {
     }
     
     private func changeLink(link: String, uid: String) {
-        withAnimation {
-            self.link = "\(link)/\(uid)"
+        DispatchQueue.global(qos: .userInteractive).async {
+            let qr = QRcode.shared.generateQR("\(link)/\(uid)")
+            withAnimation {
+                self.qrcode = qr
+            }
         }
     }
     

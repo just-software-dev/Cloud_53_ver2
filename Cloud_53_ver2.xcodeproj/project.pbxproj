@@ -222,6 +222,7 @@
 		55286BBA24DF6A93000E606D /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				55286BC624DF6A93000E606D /* QRcode.swift */,
 				55286BBB24DF6A93000E606D /* Error.swift */,
 				55286BBC24DF6A93000E606D /* AppleLogin.swift */,
 				55286BBD24DF6A93000E606D /* CoreDataHelper.swift */,
@@ -252,7 +253,6 @@
 				55286BC224DF6A93000E606D /* RoundedCorners.swift */,
 				55286BC424DF6A93000E606D /* SlideView.swift */,
 				55286BC524DF6A93000E606D /* Loading.swift */,
-				55286BC624DF6A93000E606D /* QRcode.swift */,
 				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
 				55286BC924DF6A93000E606D /* KeyboardBorder.swift */,
 			);
