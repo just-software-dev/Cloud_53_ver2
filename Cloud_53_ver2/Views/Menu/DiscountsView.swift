@@ -16,6 +16,7 @@ private var bigWidth: CGFloat {
     }
 }
 
+// Описание акции
 private struct DiscountSheet: View {
     
     var text: String
@@ -113,6 +114,7 @@ struct DiscountsView: View {
         }
     }
     
+    // Загрузка акций. Не используется FetchRequest, так как перед установкой акций их необходимо распределить по колонкам
     private func update() {
         var data: [Discount] = []
         for e in self.mc.coreDataHelper.getPromoList() ?? [] {
@@ -121,6 +123,7 @@ struct DiscountsView: View {
         self.sort(data)
     }
     
+    // Сортировка акций по размеру и установка их на экране
     private func sort(_ data: [Discount]) {
         self.sections = []
         var leftSum: CGFloat = 0

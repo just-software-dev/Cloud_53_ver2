@@ -9,11 +9,13 @@
 import SwiftUI
 import FirebaseAuth
 
+// cold - для кнопок, warm - для скидки и карты
 private enum TextureType {
     case cold
     case warm
 }
 
+// Обрезка текстур для получения View из них
 private struct TextureBackground: View {
     
     var y: CGFloat
@@ -47,6 +49,7 @@ private struct TextureBackground: View {
     }
 }
 
+// Всплывающее окно с QR-кодом
 private struct QRwindow: View {
     
     @EnvironmentObject var mc: ModelController
@@ -74,6 +77,7 @@ private struct QRwindow: View {
         }.padding(Figma.x(40))
         .background(Color.white)
         .onAppear() {
+            // Получение ссылки для официантов
             DataMonitoring.shareInstance.get(path: "information/discount_link") { (snapshot) in
                 DispatchQueue.main.async {
                     guard let link = snapshot.value as? String,
@@ -82,6 +86,7 @@ private struct QRwindow: View {
                         self.changeMessage("Данная функция скоро появится")
                         return
                     }
+                    // Установка времени открытия QR-кода (чтобы qr-код работал только определенное время после открытия)
                     DataMonitoring.shareInstance.set(path: "users/\(uid)/open/qr_time", value: self.currentDate()) { (error, ref) in
                         DispatchQueue.main.async {
                             if error != nil {
@@ -96,6 +101,7 @@ private struct QRwindow: View {
         }
     }
     
+    // Преобразование ссылки в QR-код
     private func changeLink(link: String, uid: String) {
         DispatchQueue.global(qos: .userInteractive).async {
             let qr = QRcode.shared.generateQR("\(link)/\(uid)")
@@ -124,6 +130,7 @@ private struct QRwindow: View {
     }
 }
 
+// Карта посетителя (не QR-код, а плашка с логотипом)
 private struct LoyaltyCard: View {
     
     @State private var spacing: CGFloat = 0
@@ -169,6 +176,7 @@ private struct LoyaltyCard: View {
     }
 }
 
+// Всплывающее окно с описанием того, как работает карта лояльности
 private struct Instruction: View {
     
     private let height = UIScreen.main.bounds.height / 1.75
@@ -265,10 +273,10 @@ struct MenuView: View {
     @EnvironmentObject var mc: ModelController
     
     @Binding var customSheet: MyModal?
-    @State private var yRange: [CGFloat] = []
+    @State private var yRange: [CGFloat] = [] // Координата y в исходной картинке текстуры верхней границы каждой из кнопок меню
     @State private var isAlert = false
     private let buttonHeight: CGFloat = 48
-    private var maxY: CGFloat
+    private var maxY: CGFloat // Максимально возможная y в yRange
     
     private var menu: FetchedResults<Menu>
     
@@ -323,6 +331,7 @@ struct MenuView: View {
         }
     }
     
+    // Возвращает координату y в текстуре для каждой кнопки по id. Служит для предотвращения ошибок с неправильным индексом в массиве
     private func getY(id: Int) -> CGFloat {
         if id < yRange.count {
             return yRange[id]

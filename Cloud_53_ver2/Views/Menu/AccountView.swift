@@ -15,6 +15,7 @@ private struct DevInform: Hashable {
     var button: String
 }
 
+// Окно с информацией о разработчиках
 private struct DevsView: View {
     
     @Binding var isDevs: Bool
@@ -93,7 +94,7 @@ struct AccountView: View {
     @State private var isCode = false
     @State private var showingAlert = false
     @State private var alertCase: AlertCase = .exit
-    @State private var appleName = ""
+    @State private var appleName = "" // Имя, привязанное к apple (используется для предложения сменить имя при привязке Apple ID)
     
     @State private var isLoading: Bool = false
     @State private var message: String? = nil
@@ -182,6 +183,7 @@ struct AccountView: View {
         var nameChange = false
         if phone != Auth.auth().currentUser?.phoneNumber ?? "+" {
             phoneChange = true
+            // Ввод номера телефона
             if !isCode {
                 previousPhone = phone
                 mc.enterPhone(phone: self.phone) { result in
@@ -194,6 +196,7 @@ struct AccountView: View {
                     }
                 }
             } else {
+                // Ввод кода подтверждения. Обновление номера
                 if authStatus == .both || authStatus == .phone {
                     mc.enterCode(code: self.code, mode: .update) { result in
                         self.isLoading = false
@@ -207,6 +210,7 @@ struct AccountView: View {
                         }
                     }
                 } else {
+                    // Ввод кода подтверждения. Привязка номера
                     mc.enterCode(code: self.code, mode: .link) { result in
                         self.isLoading = false
                         switch result {
@@ -221,6 +225,7 @@ struct AccountView: View {
                 }
             }
         }
+        // Обновление имени
         if name != mc.user?.name ?? "" {
             nameChange = true
             mc.setName(name) { (error, ref) in
@@ -236,6 +241,7 @@ struct AccountView: View {
         }
     }
     
+    // Выполняется при получении ответа от Apple при попытке привязать аккаунт Apple
     private func setApple(_ result: Result<String?, Error>) {
         switch result {
         case .success(let result):

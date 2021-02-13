@@ -15,6 +15,7 @@ final class AppleLogin: NSObject, ASAuthorizationControllerDelegate {
     private var currentNonce: String?
     private var completion: ((Result<String?, Error>) -> Void)? = nil
     
+    // Начало попытки входа
     func handleAuthorizationAppleIDButtonPress(mode: AuthCases = .normal, completion: ((Result<String?, Error>) -> Void)? = nil) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -31,6 +32,7 @@ final class AppleLogin: NSObject, ASAuthorizationControllerDelegate {
         authorizationController.performRequests()
     }
     
+    // Получение ответа
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             
@@ -94,6 +96,7 @@ final class AppleLogin: NSObject, ASAuthorizationControllerDelegate {
         }
     }
     
+    // Получение ответа (ошибка)
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple authorization error: \(error.localizedDescription)")
         if let completion = self.completion {

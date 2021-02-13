@@ -10,12 +10,14 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
 
+// Секции в приложении. Приветствие, вход и меню
 enum AppSection {
     case intro
     case auth
     case menu
 }
 
+// update - обновление, link - привязка (помимо телефона привязать Apple ID), normal - вход
 enum AuthCases {
     
     case update
@@ -70,7 +72,7 @@ class ModelController: ObservableObject {
     @Published private(set) var currentSection: AppSection = .intro
     @Published private(set) var user: UserInformation? = nil
     
-    private var lastAuth: AuthType?
+    private var lastAuth: AuthType? // Каким способом был выполнен вход
     private var handle: AuthStateDidChangeListenerHandle?
     private let appleLogin = AppleLogin()
     private let phoneLogin = PhoneLogin()
@@ -89,6 +91,7 @@ class ModelController: ObservableObject {
             UserDefaults.standard.set(true, forKey: "endIntro")
         }
         updateSection()
+        // Мониторинг того, выполнен вход или нет
         handle = Auth.auth().addStateDidChangeListener { [unowned model = self] (auth, user) in
             if model.user != nil && user == nil {
                 DataMonitoring.shareInstance.removeObservers()
@@ -118,11 +121,13 @@ class ModelController: ObservableObject {
         Auth.auth().removeStateDidChangeListener(handle!)
     }
     
+    // Когда приветствие завершилось
     func endIntro() {
         UserDefaults.standard.set(true, forKey: "endIntro")
         updateSection()
     }
     
+    // Выполнять, когда обновлена информация в Auth.auth().currentUser, чтобы сразу же обновить информацию на других устройствах
     func increaseUserVersion() {
         let newVersion: Int = UserDefaults.standard.integer(forKey: "account_version") + 1
         DataMonitoring.shareInstance.set(path: "users/\(Auth.auth().currentUser!.uid)/open/account_version", value: newVersion)
@@ -230,6 +235,7 @@ class ModelController: ObservableObject {
 
 extension ModelController {
     
+    // Проверяет, выполнен ли вход. Если да, то устанавливает наблюдателей, которые отвечают за получение информации с сервера
     private func start() {
         if user != nil || Auth.auth().currentUser == nil {return}
         user = UserInformation(
@@ -238,6 +244,7 @@ extension ModelController {
             carBrand: UserDefaults.standard.string(forKey: "car_brand") ?? "",
             discount: nil
         )
+        // Мониторинг информации о пользователе
         DataMonitoring.shareInstance.observe(path: "users/\(Auth.auth().currentUser!.uid)/open") { (snapshot) in
             DispatchQueue.main.async {
                 if !snapshot.exists() {
@@ -283,6 +290,7 @@ extension ModelController {
                 }
             }
         }
+        // Мониторинг разной текстовой информации
         DataMonitoring.shareInstance.observe(path: "information/realtime_configs") { (snapshot) in
             DispatchQueue.main.async {
                 guard let dict = snapshot.value as? [String: Any] else {
@@ -303,6 +311,7 @@ extension ModelController {
                 }
             }
         }
+        // Мониторинг ссылок на аккаунты разработчиков
         DataMonitoring.shareInstance.observe(path: "information/devs") { (snapshot) in
             DispatchQueue.main.async {
                 guard let dict = snapshot.value as? [String: Any] else {
@@ -317,6 +326,7 @@ extension ModelController {
                 }
             }
         }
+        // Мониторинг скидки
         DataMonitoring.shareInstance.observe(path: "users/\(Auth.auth().currentUser!.uid)/discount") { (snapshot) in
             DispatchQueue.main.async {
                 if !snapshot.exists() {
@@ -334,11 +344,11 @@ extension ModelController {
                 self.user!.discount = discount
             }
         }
-        let _: Menu? = self.download()
-        let _: Promo? = self.download()
+        let _: Menu? = self.download() // Мониторинг меню
+        let _: Promo? = self.download() // Мониторинг акций
     }
     
-//    Скачивание меню/акций
+//    Мониторинг меню/акций
     private func download<SomeEntity: MyEntity>(completion: (() -> Void)? = nil) -> SomeEntity? {
         var path = ""
         if SomeEntity.self == Promo.self {
@@ -360,6 +370,7 @@ extension ModelController {
         return nil
     }
     
+    // Устанавливает пользователю скидку по умолчанию
     private func getDefaultDiscount() {
         isDefaultDiscount = true
         DataMonitoring.shareInstance.observe(path: "information/default_discount") { (snapshot) in

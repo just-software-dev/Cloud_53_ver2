@@ -5,9 +5,11 @@
 //  Created by Андрей on 29.06.2020.
 //  Copyright © 2020 oak. All rights reserved.
 //
+// Инструменты для поднятия контента при появлении клавиатуры
 
 import SwiftUI
 
+// Отслеживание появления клавиатуры, выставление нужных значений
 class KeyboardResponder: ObservableObject {
     
     private var notificationCenter: NotificationCenter
@@ -71,6 +73,7 @@ class KeyboardResponder: ObservableObject {
     }
 }
 
+// Граница, при пересечении которой контент должен подняться
 struct KeyboardBorder: View {
     
     @ObservedObject var keyboardResponder: KeyboardResponder
@@ -96,6 +99,7 @@ struct KeyboardBorder: View {
     }
 }
 
+// Подниматель контента. Лучше использовать его вместо обычного padding, так как при padding нужно рассматривать два случая: контент занимает весь экран, контент не занимает весь экран
 struct LiftContent: ViewModifier {
     
     var up: CGFloat
@@ -110,6 +114,7 @@ struct LiftContent: ViewModifier {
     }
 }
 
+// Добавляет величину, соответствующую величине клавиатуры, под контент (для ScrollView)
 struct BottomKeyboard: ViewModifier {
 
     @ObservedObject private var keyboardResponder = KeyboardResponder()

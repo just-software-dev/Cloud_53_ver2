@@ -26,6 +26,7 @@ enum ButtonType {
     case secondary
 }
 
+// Внешний вид кнопки
 struct FigmaButtonView: View {
     
     var text: String?
@@ -105,6 +106,7 @@ struct FigmaButton: View {
     }
 }
 
+// Внешний вид кнопки (текст с подчеркиванием)
 struct UnderlinedButtonView: View {
     
     var text: String

@@ -5,6 +5,7 @@
 //  Created by Андрей on 16.07.2020.
 //  Copyright © 2020 oak. All rights reserved.
 //
+// Увеличение картинок пальцами
 
 import SwiftUI
 

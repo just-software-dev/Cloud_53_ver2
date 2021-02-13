@@ -11,10 +11,12 @@ import CoreData
 
 class CoreDataHelper: ObservableObject {
     
+    // Переменная для оповещения о том, что получены с сервера новые акции
     @Published private(set) var promoUpdate: Int = 0
     
     private let context: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    // Загрузка изображения для объекта и добавление объекта в БД. Если с данным ID уже есть объект, происходит замена
     private func add<SomeItem: MyEntityItem>(_ item: SomeItem, id: Int) {
         DataMonitoring.shareInstance.downloadImage(path: item.image) { data, error in
             DispatchQueue.main.async {
@@ -31,6 +33,7 @@ class CoreDataHelper: ObservableObject {
         }
     }
     
+    // Обновление/добавление объектов
     func update<SomeItem: MyEntityItem>(_ list: [SomeItem]) {
         var lst = list
         lst.sort {
@@ -43,6 +46,7 @@ class CoreDataHelper: ObservableObject {
         deleteData(entity: SomeItem.entityName, id: len - 1, lastID: true)
     }
     
+    // Удаление всех объектов, id которых больше аргумента "id". Если lastID == false, то удаление объекта, id которого равен аргументу "id"
     func deleteData(entity: String, id: Int? = nil, lastID: Bool = false) {
         let managedContext = self.context
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
@@ -63,6 +67,7 @@ class CoreDataHelper: ObservableObject {
         }
     }
     
+    // Получение всех акций
     func getPromoList() -> [Promo]? {
         do {
             let results = try context.fetch(Promo.getAllItems())
@@ -73,19 +78,25 @@ class CoreDataHelper: ObservableObject {
     }
 }
 
+// Нужен для того, чтобы вместо изображения хранить его название в БД на сервере
 protocol MyEntityItem {
     var order: Int16 { get set }
     var image: String { get set }
     static var entityName: String { get }
     
+    // Создание объекта в БД на основе данного объекта
     func insert(context: NSManagedObjectContext, id: Int, image: Data)
 }
 
+// Объект в БД
 protocol MyEntity: NSManagedObject, Identifiable {
     
     associatedtype MyItem: MyEntityItem
     
+    // Установка значений
     func set(_ item: MyItem, id: Int, image: Data)
+    
+    // Преобразование словаря с сервера в MyEntityItem
     static func dictToItems(menu: [String: [String: Any]]) -> [MyItem]
 }
 
@@ -121,6 +132,7 @@ public class Menu: NSManagedObject, Identifiable, MyEntity {
         self.image = image
     }
     
+    // Возвращает все объекты из БД
     static func getAllItems() -> NSFetchRequest<Menu> {
         let request: NSFetchRequest<Menu> = Menu.fetchRequest() as! NSFetchRequest<Menu>
         
@@ -180,6 +192,7 @@ public class Promo: NSManagedObject, Identifiable, MyEntity {
         self.image = image
     }
     
+    // Возвращает все объекты из БД
     static func getAllItems() -> NSFetchRequest<Promo> {
         let request: NSFetchRequest<Promo> = Promo.fetchRequest() as! NSFetchRequest<Promo>
         

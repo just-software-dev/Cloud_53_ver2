@@ -60,6 +60,7 @@ private struct MenuTitle: View {
     }
 }
 
+// Устанавливает заголовок, настраивает скрытие клавиатуры по нажатию на фон, при iOS < 14 добавляет пространство под контентом при появлении клавиатуры
 private struct Standart: ViewModifier {
     
     var title: String
@@ -92,13 +93,13 @@ private struct Standart: ViewModifier {
 struct MainMenu: View {
     
     @ObservedObject private var keyboardResponder = KeyboardResponder()
-    @State private var sections: [DiscountSection] = []
+    @State private var sections: [DiscountSection] = [] // Акции для раздела с акциями
     @State private var selection = 0
-    @State private var customSheet: MyModal? = nil
+    @State private var customSheet: MyModal? = nil // Текущее модальное окно (самописное)
     private let titles = ["Здравствуйте!", "Акции", "Парковка", "Аккаунт"]
     private let images: [UIImage] = [UIImage(named: "menu_icon")!, UIImage(named: "percent")!, UIImage(named: "p")!, UIImage(named: "person")!]
     
-    @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu>
+    @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu> // Листы меню
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -129,6 +130,7 @@ struct MainMenu: View {
     }
 }
 
+// Фон для самописных модальных окон, при нажатии на который модальное окно исчезает
 private struct TouchView: View {
     
     var whenReturn: () -> Void
@@ -144,6 +146,7 @@ private struct TouchView: View {
     }
 }
 
+// Структура самописного модального окна
 struct MyModal {
     var view: AnyView
     var type: Alignment
@@ -151,6 +154,7 @@ struct MyModal {
 
 private extension View {
     
+    // Показ самописных модальных окон
     func customSheetView(_ modal: Binding<MyModal?>) -> some View {
         ZStack {
             self.zIndex(1)
@@ -180,8 +184,8 @@ private extension View {
     }
 }
 
-struct MainMenu_Previews: PreviewProvider {
-    static var previews: some View {
-        MainMenu()
-    }
-}
+//struct MainMenu_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainMenu()
+//    }
+//}
