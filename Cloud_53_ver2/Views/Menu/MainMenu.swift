@@ -65,11 +65,13 @@ private struct Standart: ViewModifier {
     var title: String
     
     func body(content: Content) -> some View {
-        VStack(spacing: 0) {
-            MenuTitle(title: title)
-                .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
-            content
-                .padding(.bottom, 110)
+        Group {
+            if ProcessInfo().operatingSystemVersion.majorVersion < 14 {
+                setView(content: content)
+                    .modifier(BottomKeyboard())
+            } else {
+                setView(content: content)
+            }
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -77,14 +79,14 @@ private struct Standart: ViewModifier {
         }
     }
     
-//    func setView(content: Content) -> some View {
-//        VStack(spacing: 0) {
-//            MenuTitle(title: title)
-//                .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
-//            content
-//                .padding(.bottom, 110)
-//        }
-//    }
+    func setView(content: Content) -> some View {
+        VStack(spacing: 0) {
+            MenuTitle(title: title)
+                .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
+            content
+                .padding(.bottom, 110)
+        }
+    }
 }
 
 struct MainMenu: View {
