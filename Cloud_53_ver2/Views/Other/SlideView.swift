@@ -176,7 +176,8 @@ struct SlideView<Content: View>: View {
         ZStack {
             if slideController.flag {
                 setTransition(content(slideController.steps[1]))
-            } else {
+            }
+            if !slideController.flag {
                 setTransition(content(slideController.steps[0]))
             }
         }

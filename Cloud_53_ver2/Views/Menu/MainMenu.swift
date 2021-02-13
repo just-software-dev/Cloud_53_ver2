@@ -76,6 +76,15 @@ private struct Standart: ViewModifier {
             UIApplication.shared.closeKeyboard()
         }
     }
+    
+//    func setView(content: Content) -> some View {
+//        VStack(spacing: 0) {
+//            MenuTitle(title: title)
+//                .padding(EdgeInsets(top: 42, leading: 40, bottom: 29, trailing: 40))
+//            content
+//                .padding(.bottom, 110)
+//        }
+//    }
 }
 
 struct MainMenu: View {
