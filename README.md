@@ -1,6 +1,7 @@
 # Cloud_53_ver2
 
 Application for the lounge bar "Облако 53" in the center of Moscow near metro University.
+IOS 13 and iOS 14 support
 
 Design by waaaks: https://www.instagram.com/waaaks__/
 
