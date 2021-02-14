@@ -130,6 +130,7 @@ struct Message: View {
             if text != nil {
                 Text(text!)
                     .font(.SFUIDisplay(16))
+                    .minimumScaleFactor(0.5)
                     .foregroundColor(Figma.lightGray)
                     .padding(.vertical, 10)
                     .multilineTextAlignment(.center)
@@ -145,6 +146,7 @@ struct FigmaTitle: View {
     var body: some View {
         Text(text)
             .font(.SFUIDisplay(26))
+            .minimumScaleFactor(0.5)
             .frame(width: Figma.x(250), alignment: Alignment.leading)
     }
 }

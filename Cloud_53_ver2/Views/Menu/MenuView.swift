@@ -187,7 +187,9 @@ private struct Instruction: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 14) {
                 Text(self.title).font(.SFUIDisplay(24))
+                    .minimumScaleFactor(0.5)
                 Text(self.text).font(.SFUIDisplay(16))
+                    .minimumScaleFactor(0.5)
             }.padding(EdgeInsets(top: Figma.y(39), leading: 33, bottom: Figma.y(54), trailing: 33))
         }
         .frame(height: self.height)
