@@ -167,7 +167,6 @@ private extension View {
                         VStack {
                             Spacer()
                             modal.wrappedValue!.view
-                                .clipShape(RoundedCorners(tl: 25, tr: 25))
                         }.transition(.move(edge: .bottom))
                         .edgesIgnoringSafeArea(.all)
                     } else if modal.wrappedValue!.type == .center {

@@ -30,7 +30,6 @@
 		55286BDE24DF6A95000E606D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BBF24DF6A93000E606D /* Extensions.swift */; };
 		55286BDF24DF6A95000E606D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC024DF6A93000E606D /* CustomTextField.swift */; };
 		55286BE024DF6A95000E606D /* DataMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC124DF6A93000E606D /* DataMonitoring.swift */; };
-		55286BE124DF6A95000E606D /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC224DF6A93000E606D /* RoundedCorners.swift */; };
 		55286BE224DF6A95000E606D /* MyHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC324DF6A93000E606D /* MyHTTP.swift */; };
 		55286BE324DF6A95000E606D /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC424DF6A93000E606D /* SlideView.swift */; };
 		55286BE424DF6A95000E606D /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC524DF6A93000E606D /* Loading.swift */; };
@@ -86,7 +85,6 @@
 		55286BBF24DF6A93000E606D /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		55286BC024DF6A93000E606D /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		55286BC124DF6A93000E606D /* DataMonitoring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMonitoring.swift; sourceTree = "<group>"; };
-		55286BC224DF6A93000E606D /* RoundedCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		55286BC324DF6A93000E606D /* MyHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyHTTP.swift; sourceTree = "<group>"; };
 		55286BC424DF6A93000E606D /* SlideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
 		55286BC524DF6A93000E606D /* Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
@@ -250,7 +248,6 @@
 				55286BAE24DF6A92000E606D /* Elements.swift */,
 				556CE8E525D7325000B237EC /* AppleLoginButton.swift */,
 				55286BC024DF6A93000E606D /* CustomTextField.swift */,
-				55286BC224DF6A93000E606D /* RoundedCorners.swift */,
 				55286BC424DF6A93000E606D /* SlideView.swift */,
 				55286BC524DF6A93000E606D /* Loading.swift */,
 				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
@@ -477,7 +474,6 @@
 				55286BE624DF6A95000E606D /* Figma.swift in Sources */,
 				55286BE824DF6A95000E606D /* KeyboardBorder.swift in Sources */,
 				55286BE024DF6A95000E606D /* DataMonitoring.swift in Sources */,
-				55286BE124DF6A95000E606D /* RoundedCorners.swift in Sources */,
 				55286BD324DF6A95000E606D /* AccountView.swift in Sources */,
 				55286BD824DF6A95000E606D /* PhoneAuthView.swift in Sources */,
 				55286BE324DF6A95000E606D /* SlideView.swift in Sources */,
@@ -625,7 +621,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Cloud_53_ver2/Облако 53.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Cloud_53_ver2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
@@ -652,7 +648,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Cloud_53_ver2/Облако 53.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Cloud_53_ver2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6W3ZNHRYY4;
 				ENABLE_PREVIEWS = YES;
