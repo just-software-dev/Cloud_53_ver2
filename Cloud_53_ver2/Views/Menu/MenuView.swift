@@ -292,8 +292,7 @@ struct MenuView: View {
                     .font(.SFUIDisplay(17))
                     .foregroundColor(.white)
                 } else {
-                    Loading(color: .white)
-                        .padding(7)
+                    NativeLoading()
                 }
             }.frame(height: self.buttonHeight)
             HStack(spacing: Figma.x(21)) {

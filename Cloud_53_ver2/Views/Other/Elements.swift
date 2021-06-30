@@ -21,6 +21,23 @@ struct Blur: UIViewRepresentable {
     }
 }
 
+struct NativeLoading: UIViewRepresentable {
+
+    private let style: UIActivityIndicatorView.Style
+
+    func makeUIView(context: UIViewRepresentableContext<NativeLoading>) -> UIActivityIndicatorView {
+        let view = UIActivityIndicatorView(style: style)
+        view.startAnimating()
+        return view
+    }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<NativeLoading>) {}
+    
+    init(style: UIActivityIndicatorView.Style = .medium) {
+        self.style = style
+    }
+}
+
 enum ButtonType {
     case primary
     case secondary
@@ -40,8 +57,7 @@ struct FigmaButtonView: View {
         ZStack {
             self.bgColor
             if self.loading {
-                Loading(color: .white)
-                    .padding(7)
+                NativeLoading()
             } else {
                 if image != nil {
                     Image(uiImage: image!)
