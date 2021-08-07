@@ -25,7 +25,7 @@ class ImageZoomVC: UIViewController, ModalVCWithScrollView {
         ImageZoomView(
             frame: frame,
             image: image
-        )
+        ).autoLayout()
     }()
     
     init(image: UIImage, envSize: CGSize) {
@@ -42,6 +42,7 @@ class ImageZoomVC: UIViewController, ModalVCWithScrollView {
         super.loadView()
         view.backgroundColor = .black
         view.addSubview(imageZoomView)
+        imageZoomView.layout()
     }
 }
 
