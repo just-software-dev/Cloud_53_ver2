@@ -134,7 +134,9 @@ private struct QRwindow: View {
 private struct LoyaltyCard: View {
     
     @State private var spacing: CGFloat = 0
-    @Binding var customSheet: MyModal?
+    @Binding private var popupView: AnyView?
+    
+    private let modalPresentAction: ModalPresentAction
     
     var body: some View {
         ZStack {
@@ -149,7 +151,7 @@ private struct LoyaltyCard: View {
                 ZStack {
                     Button(action: {
                         withAnimation {
-                            self.customSheet = MyModal(view: AnyView(QRwindow()), type: .center)
+                            self.popupView = AnyView(QRwindow())
                         }
                     }) {
                         UnderlinedButtonView(text: "Показать карту")
@@ -158,9 +160,11 @@ private struct LoyaltyCard: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            withAnimation {
-                                self.customSheet = MyModal(view: AnyView(Instruction()), type: .bottom)
-                            }
+                            self.modalPresentAction(
+                                InstructionVC(),
+                                UIScreen.main.bounds.height / 1.75,
+                                true
+                            )
                         }) {
                             Image(systemName: "questionmark.circle")
                                 .resizable()
@@ -174,26 +178,10 @@ private struct LoyaltyCard: View {
             }
         }
     }
-}
-
-// Всплывающее окно с описанием того, как работает карта лояльности
-private struct Instruction: View {
     
-    private let height = UIScreen.main.bounds.height / 1.75
-    @State private var title = "Накопительная карта гостя"
-    @State private var text: String = UserDefaults.standard.string(forKey: "loyalty") ?? ""
-    
-    var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 14) {
-                Text(self.title).font(.SFUIDisplay(24))
-                    .minimumScaleFactor(0.9)
-                Text(self.text).font(.SFUIDisplay(16))
-                    .minimumScaleFactor(0.9)
-            }.padding(EdgeInsets(top: Figma.y(39), leading: 33, bottom: Figma.y(54), trailing: 33))
-        }
-        .frame(height: self.height)
-        .background(Figma.darkGray)
+    init(modalPresentAction: @escaping ModalPresentAction, popupView: Binding<AnyView?>) {
+        self.modalPresentAction = modalPresentAction
+        self._popupView = popupView
     }
 }
 
@@ -274,17 +262,18 @@ struct MenuView: View {
     
     @EnvironmentObject var mc: ModelController
     
-    @Binding var customSheet: MyModal?
+    @Binding var popupView: AnyView?
     @State private var yRange: [CGFloat] = [] // Координата y в исходной картинке текстуры верхней границы каждой из кнопок меню
     @State private var isAlert = false
     private let buttonHeight: CGFloat = 48
     private var maxY: CGFloat // Максимально возможная y в yRange
     
     private var menu: FetchedResults<Menu>
+    private let modalPresentAction: ModalPresentAction
     
     var body: some View {
         VStack(spacing: 24) {
-            LoyaltyCard(customSheet: self.$customSheet)
+            LoyaltyCard(modalPresentAction: modalPresentAction, popupView: self.$popupView)
             ZStack {
                 TextureBackground(y: 0, texture: .warm, blackout: .center)
                 if mc.user?.discount != nil {
@@ -307,9 +296,12 @@ struct MenuView: View {
                         self.isAlert = true
                         return
                     }
-                    withAnimation {
-                        self.customSheet = MyModal(view: AnyView(ImageZoomView(image: uiImage)), type: .bottom)
-                    }
+                    let modalVC = ImageZoomVC(image: uiImage, envSize: UIScreen.main.bounds.size)
+                    self.modalPresentAction(
+                        modalVC,
+                        modalVC.preferredHeight,
+                        false
+                    )
                 }) {
                     ZStack(alignment: .leading) {
                         TextureBackground(y: self.getY(id: Int((element as! Menu).id)))
@@ -341,10 +333,15 @@ struct MenuView: View {
         }
     }
     
-    init(_ customSheet: Binding<MyModal?>, menu: FetchedResults<Menu>) {
+    init(
+        _ popupView: Binding<AnyView?>,
+        menu: FetchedResults<Menu>,
+        modalPresentAction: @escaping ModalPresentAction
+    ) {
         maxY = UIImage(named: "cold_texture")!.size.height - self.buttonHeight
-        self._customSheet = customSheet
+        self._popupView = popupView
         self.menu = menu
+        self.modalPresentAction = modalPresentAction
     }
 }
 

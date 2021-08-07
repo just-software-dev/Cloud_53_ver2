@@ -10,6 +10,12 @@ import UIKit
 import SwiftUI
 import FirebaseAuth
 
+typealias ModalPresentAction = (
+    _ vc: ModalVCWithScrollView,
+    _ height: CGFloat,
+    _ isElastic: Bool
+) -> Void
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -24,7 +30,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, context).environmentObject(ModelController())
+        let contentView = ContentView { [weak self] vc, height, isElastic in
+            self?.window?.rootViewController?.presentModal(
+                vc,
+                height: height,
+                isElastic: isElastic
+            )
+        }.environment(\.managedObjectContext, context).environmentObject(ModelController())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

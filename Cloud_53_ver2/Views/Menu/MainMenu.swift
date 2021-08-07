@@ -95,9 +95,10 @@ struct MainMenu: View {
     @ObservedObject private var keyboardResponder = KeyboardResponder()
     @State private var sections: [DiscountSection] = [] // Акции для раздела с акциями
     @State private var selection = 0
-    @State private var customSheet: MyModal? = nil // Текущее модальное окно (самописное)
+    @State private var popupView: AnyView? = nil // Текущее модальное окно (самописное)
     private let titles = ["Здравствуйте!", "Акции", "Парковка", "Аккаунт"]
     private let images: [UIImage] = [UIImage(named: "menu_icon")!, UIImage(named: "percent")!, UIImage(named: "p")!, UIImage(named: "person")!]
+    private let modalPresentAction: ModalPresentAction
     
     @FetchRequest(fetchRequest: Menu.getAllItems()) var menu: FetchedResults<Menu> // Листы меню
 
@@ -109,9 +110,9 @@ struct MainMenu: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
                     if selection == 0 {
-                        MenuView(self.$customSheet, menu: self.menu)
+                        MenuView(self.$popupView, menu: self.menu, modalPresentAction: modalPresentAction)
                     } else if selection == 1 {
-                        DiscountsView(sections: self.$sections, customSheet: self.$customSheet)
+                        DiscountsView(sections: self.$sections, popupView: self.$popupView)
                     } else if selection == 2 {
                         ParkingView()
                     } else if selection == 3 {
@@ -126,7 +127,11 @@ struct MainMenu: View {
                         .padding(.bottom, 27)
                 }.zIndex(3)
             }
-        }.customSheetView(self.$customSheet)
+        }.presentPopupView(self.$popupView)
+    }
+    
+    init(modalPresentAction: @escaping ModalPresentAction) {
+        self.modalPresentAction = modalPresentAction
     }
 }
 
@@ -146,45 +151,24 @@ private struct TouchView: View {
     }
 }
 
-// Структура самописного модального окна
-struct MyModal {
-    var view: AnyView
-    var type: Alignment
-}
-
 private extension View {
     
     // Показ самописных модальных окон
-    func customSheetView(_ modal: Binding<MyModal?>) -> some View {
+    func presentPopupView(_ popup: Binding<AnyView?>) -> some View {
         ZStack {
             self.zIndex(1)
-            if modal.wrappedValue != nil {
+            if popup.wrappedValue != nil {
                 Color.blackout(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .zIndex(2)
-                Group {
-                    if modal.wrappedValue!.type == .bottom {
-                        VStack {
-                            Spacer()
-                            modal.wrappedValue!.view
-                        }.transition(.move(edge: .bottom))
-                        .edgesIgnoringSafeArea(.all)
-                    } else if modal.wrappedValue!.type == .center {
-                        modal.wrappedValue!.view
-                            .cornerRadius(30)
-                            .padding(Figma.x(20))
-                    }
-                }.zIndex(3)
-                TouchView(whenReturn: {modal.wrappedValue = nil})
+                popup.wrappedValue!
+                    .cornerRadius(30)
+                    .padding(Figma.x(20))
+                    .zIndex(3)
+                TouchView(whenReturn: {popup.wrappedValue = nil})
                     .edgesIgnoringSafeArea(.all)
                     .zIndex(4)
             }
         }
     }
 }
-
-//struct MainMenu_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MainMenu()
-//    }
-//}

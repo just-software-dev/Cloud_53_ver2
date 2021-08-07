@@ -35,7 +35,7 @@
 		55286BE424DF6A95000E606D /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC524DF6A93000E606D /* Loading.swift */; };
 		55286BE524DF6A95000E606D /* QRcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC624DF6A93000E606D /* QRcode.swift */; };
 		55286BE624DF6A95000E606D /* Figma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC724DF6A93000E606D /* Figma.swift */; };
-		55286BE724DF6A95000E606D /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC824DF6A93000E606D /* ImageZoomView.swift */; };
+		55286BE724DF6A95000E606D /* ImageZoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC824DF6A93000E606D /* ImageZoomVC.swift */; };
 		55286BE824DF6A95000E606D /* KeyboardBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BC924DF6A93000E606D /* KeyboardBorder.swift */; };
 		55286BE924DF6A95000E606D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BCA24DF6A93000E606D /* SceneDelegate.swift */; };
 		55286BEA24DF6A95000E606D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BCB24DF6A94000E606D /* ContentView.swift */; };
@@ -44,6 +44,9 @@
 		55286BED24DF6A95000E606D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55286BCF24DF6A95000E606D /* AppDelegate.swift */; };
 		55286BF024DF6B06000E606D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55286BEF24DF6B06000E606D /* GoogleService-Info.plist */; };
 		556CE8E625D7325000B237EC /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556CE8E525D7325000B237EC /* AppleLoginButton.swift */; };
+		55CC783926BDEE1300119850 /* ModalPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC783826BDEE1300119850 /* ModalPresenting.swift */; };
+		55CC783B26BDF8EB00119850 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC783A26BDF8EB00119850 /* AutoLayout.swift */; };
+		55CC783D26BDFC2A00119850 /* InstructionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC783C26BDFC2A00119850 /* InstructionVC.swift */; };
 		6BDE74527202AFB0693DB7F2 /* Pods_Cloud_53_ver2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08B398EFCCB79CEEDB5C812 /* Pods_Cloud_53_ver2.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,7 +93,7 @@
 		55286BC524DF6A93000E606D /* Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		55286BC624DF6A93000E606D /* QRcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRcode.swift; sourceTree = "<group>"; };
 		55286BC724DF6A93000E606D /* Figma.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Figma.swift; sourceTree = "<group>"; };
-		55286BC824DF6A93000E606D /* ImageZoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
+		55286BC824DF6A93000E606D /* ImageZoomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoomVC.swift; sourceTree = "<group>"; };
 		55286BC924DF6A93000E606D /* KeyboardBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardBorder.swift; sourceTree = "<group>"; };
 		55286BCA24DF6A93000E606D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		55286BCB24DF6A94000E606D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +103,9 @@
 		55286BEE24DF6ABB000E606D /* Облако 53.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Облако 53.entitlements"; sourceTree = "<group>"; };
 		55286BEF24DF6B06000E606D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		556CE8E525D7325000B237EC /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
+		55CC783826BDEE1300119850 /* ModalPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresenting.swift; sourceTree = "<group>"; };
+		55CC783A26BDF8EB00119850 /* AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayout.swift; sourceTree = "<group>"; };
+		55CC783C26BDFC2A00119850 /* InstructionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionVC.swift; sourceTree = "<group>"; };
 		84291F253CA3FD70A4A3223A /* Pods-Cloud_53_ver2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud_53_ver2.release.xcconfig"; path = "Target Support Files/Pods-Cloud_53_ver2/Pods-Cloud_53_ver2.release.xcconfig"; sourceTree = "<group>"; };
 		A08B398EFCCB79CEEDB5C812 /* Pods_Cloud_53_ver2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cloud_53_ver2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE06E2C0882BA50E0CB9081E /* Pods-Cloud_53_ver2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cloud_53_ver2.debug.xcconfig"; path = "Target Support Files/Pods-Cloud_53_ver2/Pods-Cloud_53_ver2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 				55286BB224DF6A92000E606D /* AccountView.swift */,
 				55286BB324DF6A92000E606D /* ParkingView.swift */,
 				55286BB424DF6A92000E606D /* MenuView.swift */,
+				55CC783C26BDFC2A00119850 /* InstructionVC.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -229,6 +236,8 @@
 				55286BC124DF6A93000E606D /* DataMonitoring.swift */,
 				55286BC324DF6A93000E606D /* MyHTTP.swift */,
 				55286BC724DF6A93000E606D /* Figma.swift */,
+				55CC783826BDEE1300119850 /* ModalPresenting.swift */,
+				55CC783A26BDF8EB00119850 /* AutoLayout.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -250,7 +259,7 @@
 				55286BC024DF6A93000E606D /* CustomTextField.swift */,
 				55286BC424DF6A93000E606D /* SlideView.swift */,
 				55286BC524DF6A93000E606D /* Loading.swift */,
-				55286BC824DF6A93000E606D /* ImageZoomView.swift */,
+				55286BC824DF6A93000E606D /* ImageZoomVC.swift */,
 				55286BC924DF6A93000E606D /* KeyboardBorder.swift */,
 			);
 			path = Other;
@@ -456,17 +465,20 @@
 				55286BD624DF6A95000E606D /* IntroView.swift in Sources */,
 				556CE8E625D7325000B237EC /* AppleLoginButton.swift in Sources */,
 				55286BDA24DF6A95000E606D /* Error.swift in Sources */,
+				55CC783926BDEE1300119850 /* ModalPresenting.swift in Sources */,
 				55286BDD24DF6A95000E606D /* PhoneLogin.swift in Sources */,
 				55286BD024DF6A95000E606D /* Elements.swift in Sources */,
 				55286BD224DF6A95000E606D /* DiscountsView.swift in Sources */,
 				55286BDF24DF6A95000E606D /* CustomTextField.swift in Sources */,
 				55286BE224DF6A95000E606D /* MyHTTP.swift in Sources */,
+				55CC783B26BDF8EB00119850 /* AutoLayout.swift in Sources */,
+				55CC783D26BDFC2A00119850 /* InstructionVC.swift in Sources */,
 				55286BD124DF6A95000E606D /* MainMenu.swift in Sources */,
 				55286BE924DF6A95000E606D /* SceneDelegate.swift in Sources */,
 				55286BE524DF6A95000E606D /* QRcode.swift in Sources */,
 				55286BD424DF6A95000E606D /* ParkingView.swift in Sources */,
 				55286BDB24DF6A95000E606D /* AppleLogin.swift in Sources */,
-				55286BE724DF6A95000E606D /* ImageZoomView.swift in Sources */,
+				55286BE724DF6A95000E606D /* ImageZoomVC.swift in Sources */,
 				55286BDE24DF6A95000E606D /* Extensions.swift in Sources */,
 				55286BE424DF6A95000E606D /* Loading.swift in Sources */,
 				55286BDC24DF6A95000E606D /* CoreDataHelper.swift in Sources */,

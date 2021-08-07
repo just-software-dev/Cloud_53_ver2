@@ -35,12 +35,12 @@ private struct DiscountCell: View {
     var image: UIImage
     var title: String
     var description: String
-    @Binding var customSheet: MyModal?
+    @Binding var popupView: AnyView?
     
     var body: some View {
         Button(action: {
             withAnimation {
-                self.customSheet = MyModal(view: AnyView(DiscountSheet(text: self.description)), type: .center)
+                self.popupView = AnyView(DiscountSheet(text: self.description))
             }
         }) {
             VStack(alignment: .leading, spacing: 7) {
@@ -59,12 +59,12 @@ private struct DiscountCell: View {
 private struct DiscountColumn: View {
     
     var list: [Discount]
-    @Binding var customSheet: MyModal?
+    @Binding var popupView: AnyView?
     
     var body: some View {
         VStack(spacing: 10) {
             ForEach(self.list) { discount in
-                DiscountCell(image: discount.image, title: discount.title, description: discount.description, customSheet: self.$customSheet)
+                DiscountCell(image: discount.image, title: discount.title, description: discount.description, popupView: self.$popupView)
             }
         }.frame(width: discountWidth)
     }
@@ -90,18 +90,18 @@ struct DiscountsView: View {
     @EnvironmentObject var mc: ModelController
     
     @Binding var sections: [DiscountSection]
-    @Binding var customSheet: MyModal?
+    @Binding var popupView: AnyView?
     @State private var data: [Discount] = []
     
     var body: some View {
         VStack(spacing: 10) {
             ForEach(self.sections) { section in
                 HStack(alignment: .top, spacing: spaceWidth) {
-                    DiscountColumn(list: section.leftColumn, customSheet: self.$customSheet)
-                    DiscountColumn(list: section.rightColumn, customSheet: self.$customSheet)
+                    DiscountColumn(list: section.leftColumn, popupView: self.$popupView)
+                    DiscountColumn(list: section.rightColumn, popupView: self.$popupView)
                 }
                 if section.bigDiscount != nil {
-                    DiscountCell(image: section.bigDiscount!.image, title: section.bigDiscount!.title, description: section.bigDiscount!.description, customSheet: self.$customSheet)
+                    DiscountCell(image: section.bigDiscount!.image, title: section.bigDiscount!.title, description: section.bigDiscount!.description, popupView: self.$popupView)
                         .frame(width: bigWidth)
                 } else {
                     Spacer().frame(width: 0, height: 0)

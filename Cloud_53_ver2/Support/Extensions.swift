@@ -35,6 +35,17 @@ extension Font {
     }
 }
 
+extension UIFont {
+    
+    static func SFUIDisplay(_ size: CGFloat) -> UIFont {
+        UIFont(name: "SF UI Display", size: size)!
+    }
+    
+    static func SFProDisplay(_ size: CGFloat) -> UIFont {
+        UIFont(name: "SF Pro Display Bold", size: size)!
+    }
+}
+
 extension UIApplication {
     
     func closeKeyboard() {
@@ -59,5 +70,38 @@ extension UIApplication {
             default:
                 fatalError("Incorrect alignment")
         }
+    }
+}
+
+extension CACornerMask {
+    public static let top: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    public static let bottom: CACornerMask = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    public static let left: CACornerMask = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+    public static let right: CACornerMask = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+    public static let all: CACornerMask = [
+        .layerMinXMinYCorner,
+        .layerMaxXMinYCorner,
+        .layerMinXMaxYCorner,
+        .layerMaxXMaxYCorner
+    ]
+}
+
+extension UIView {
+    public func roundCorners(_ corners: CACornerMask = .all, radius: CGFloat) {
+        clipsToBounds = true
+        layer.cornerRadius = radius
+        layer.maskedCorners = corners
+    }
+}
+
+extension UIImage {
+    func getFrame(for envSize: CGSize) -> CGRect {
+        var scale: CGFloat = 0
+        if size.height / size.width > envSize.height / envSize.width {
+            scale = envSize.height / size.height
+        } else {
+            scale = envSize.width / size.width
+        }
+        return CGRect(x: 0, y: 0, width: size.width * scale, height: size.height * scale)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ImageZoomView.swift
+//  ImageZoomVC.swift
 //  Cloud 53
 //
 //  Created by Андрей on 16.07.2020.
@@ -7,62 +7,55 @@
 //
 // Увеличение картинок пальцами
 
-import SwiftUI
+import UIKit
 
-struct ImageZoomView: View {
+class ImageZoomVC: UIViewController, ModalVCWithScrollView {
+    private let image: UIImage
+    private let frame: CGRect
     
-    var image: UIImage
-    @State private var rect: CGRect = .zero
+    var preferredHeight: CGFloat {
+        frame.height
+    }
     
-    var body: some View {
-        UIImageZoomViewRepresent(image: self.image, rect: self.$rect)
-            .frame(width: self.rect.width, height: self.rect.height)
+    var scrollViewPresentedOnModal: ScrollViewPresentedOnModal {
+        imageZoomView
+    }
+
+    private lazy var imageZoomView: ImageZoomView = {
+        ImageZoomView(
+            frame: frame,
+            image: image
+        )
+    }()
+    
+    init(image: UIImage, envSize: CGSize) {
+        self.image = image
+        self.frame = image.getFrame(for: envSize)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        super.loadView()
+        view.backgroundColor = .black
+        view.addSubview(imageZoomView)
     }
 }
 
-private struct UIImageZoomViewRepresent: UIViewRepresentable {
-    
-    var image: UIImage
-    @Binding var rect: CGRect
-    
-    func makeUIView(context: UIViewRepresentableContext<UIImageZoomViewRepresent>) -> UIImageZoomView {
-        let uiView = UIImageZoomView()
-        let frame = getFrame()
-        uiView.frame = frame
-        DispatchQueue.main.async {
-            self.rect = frame
-        }
-        uiView.set(image: image)
-        return uiView
-    }
-
-    func updateUIView(_ uiView: UIImageZoomView, context: UIViewRepresentableContext<UIImageZoomViewRepresent>) {
-    }
-    
-    func getFrame() -> CGRect {
-        var scale: CGFloat = 0
-        let envSize = UIScreen.main.bounds
-        let size = image.size
-        if size.height / size.width > envSize.height / envSize.width {
-            scale = envSize.height / size.height
-        } else {
-            scale = envSize.width / size.width
-        }
-        return CGRect(x: 0, y: 0, width: size.width * scale, height: size.height * scale)
-    }
-}
-
-private class UIImageZoomView: UIScrollView, UIScrollViewDelegate {
+private class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
     private var imageZoomView: UIImageView!
     
-    lazy var zoomingTap: UITapGestureRecognizer = {
+    private lazy var zoomingTap: UITapGestureRecognizer = {
         let zoomingTap = UITapGestureRecognizer(target: self, action: #selector(handleZoomingTap))
         zoomingTap.numberOfTapsRequired = 2
         return zoomingTap
     }()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, image: UIImage) {
         super.init(frame: frame)
         
         self.delegate = self
@@ -71,6 +64,7 @@ private class UIImageZoomView: UIScrollView, UIScrollViewDelegate {
         self.decelerationRate = UIScrollView.DecelerationRate.fast
         self.bouncesZoom = false
         self.bounces = false
+        set(image: image)
     }
     
     required init?(coder: NSCoder) {
