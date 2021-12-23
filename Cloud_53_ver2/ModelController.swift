@@ -202,7 +202,8 @@ class ModelController: ObservableObject {
                         case .success(let data):
                             completion(String(decoding: data, as: UTF8.self))
                         case .failure(let error):
-                            completion(error.localizedDescription)
+                            print("PARKING ERROR:", error.localizedDescription)
+                            completion("Заказ парковки временно недоступен")
                         }
                     }
                 }

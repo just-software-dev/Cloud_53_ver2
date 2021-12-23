@@ -23,8 +23,15 @@ class MyHTTP {
             let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = error {
                     completion(.failure(error))
+                } else if
+                    let httpResponse = response as? HTTPURLResponse,
+                    httpResponse.statusCode < 200 || httpResponse.statusCode >= 300
+                {
+                    completion(.failure(CustomError("Error (\(httpResponse.statusCode))")))
                 } else if let data = data {
                     completion(.success(data))
+                } else {
+                    completion(.failure(CustomError("No data")))
                 }
             }
             dataTask.resume()
@@ -32,5 +39,13 @@ class MyHTTP {
         catch {
             fatalError("Encode error")
         }
+    }
+}
+
+private struct CustomError: LocalizedError {
+    let errorDescription: String?
+    
+    init(_ description: String) {
+        self.errorDescription = description
     }
 }

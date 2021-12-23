@@ -291,7 +291,7 @@ struct MenuView: View {
             }
             ForEach(menu, id: \.self) { element in
                 Button(action: {
-                    guard let uiImage = UIImage(data: (element as! Menu).image)
+                    guard let uiImage = UIImage(data: element.image)
                     else {
                         self.isAlert = true
                         return
@@ -304,9 +304,9 @@ struct MenuView: View {
                     )
                 }) {
                     ZStack(alignment: .leading) {
-                        TextureBackground(y: self.getY(id: Int((element as! Menu).id)))
+                        TextureBackground(y: self.getY(id: Int(element.id)))
                             .frame(height: self.buttonHeight)
-                        Text((element as! Menu).title)
+                        Text(element.title)
                             .font(.SFUIDisplay(18))
                             .padding(.horizontal, 31)
                             .foregroundColor(.white)
