@@ -1,4 +1,4 @@
-# Cloud_53_ver2
+# Cloud_53_ver2 (my first normal iOS app)
 
 Application for the lounge bar "Облако 53" in the center of Moscow near metro University.
 
