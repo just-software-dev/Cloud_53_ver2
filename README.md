@@ -1,8 +1,6 @@
-# Cloud_53_ver2 (my first normal iOS app)
+# iOS app for the lounge bar Cloud 53
 
-Application for the lounge bar "Облако 53" in the center of Moscow near metro University.
-
-IOS 13.2+ support
+iOS 13.2+ support
 
 Design by waaaks: https://www.instagram.com/waaaks__/
 
@@ -10,7 +8,10 @@ Prototype: https://www.figma.com/file/bfcuKL6jhIZJlKKQJY2cYw/ios-OBLAKO-53
 
 App Store: https://apps.apple.com/au/app/облако-53-университет/id1501105480?l=ru
 
-how to install pods:
-1. open command line
-2. go to project's directory
-3. write: pod install
+How to setup project:
+1. Open command line
+2. Write: `git clone https://github.com/Andrey1029/Cloud_53_ver2.git`
+3. Write: `cd Cloud_53_ver2`
+4. Write: `pod install`
+5. Open Cloud_53_ver2.xcworkspace
+6. Build project and launch it ⚡️
