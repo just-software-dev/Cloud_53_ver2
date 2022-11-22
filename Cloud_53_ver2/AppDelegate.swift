@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Pass device token to auth
         Auth.auth().setAPNSToken(deviceToken, type: .prod)
-
+        print("APNS token:", deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
         // Further handling of the device token if needed by the app
         // ...
     }
