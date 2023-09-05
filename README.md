@@ -6,8 +6,6 @@ Design by waaaks: https://www.instagram.com/waaaks__/
 
 Prototype: https://www.figma.com/file/bfcuKL6jhIZJlKKQJY2cYw/ios-OBLAKO-53
 
-App Store: https://apps.apple.com/app/id1501105480
-
 How to setup project:
 1. Open terminal
 2. Write: `git clone https://github.com/just-software-dev/Cloud_53_ver2.git`
